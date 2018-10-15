@@ -1,0 +1,3 @@
+ID: 2
+Nombre: 12
+ID_Juego: 0

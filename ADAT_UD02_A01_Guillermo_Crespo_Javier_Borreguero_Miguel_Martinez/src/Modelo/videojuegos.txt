@@ -1,0 +1,5 @@
+ID: 0
+Nombre: Super1
+Fecha de Lanzamiento: ayer
+Desarrollador: Nintendo
+Plataforma: DS
