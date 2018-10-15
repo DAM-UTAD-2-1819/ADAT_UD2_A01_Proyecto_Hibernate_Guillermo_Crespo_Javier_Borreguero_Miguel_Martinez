@@ -18,7 +18,7 @@ public class videojuegos {
 	}
 
 	public void setID(int iD) {
-		this.ID = iD;
+		this.ID = ID;
 	}
 
 	public String getNombre() {
