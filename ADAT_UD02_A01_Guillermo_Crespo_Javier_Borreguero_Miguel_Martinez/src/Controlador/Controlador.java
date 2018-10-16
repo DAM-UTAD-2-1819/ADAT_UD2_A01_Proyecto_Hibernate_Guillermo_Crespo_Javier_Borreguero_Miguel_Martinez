@@ -51,6 +51,7 @@ public class Controlador {
 	public void BBDD2TXTPer(){
 		mFM.AñadirPer();
 	}
+	
 	public void Cargar_Inicio() {
 		// TODO Auto-generated method stub
 		try {

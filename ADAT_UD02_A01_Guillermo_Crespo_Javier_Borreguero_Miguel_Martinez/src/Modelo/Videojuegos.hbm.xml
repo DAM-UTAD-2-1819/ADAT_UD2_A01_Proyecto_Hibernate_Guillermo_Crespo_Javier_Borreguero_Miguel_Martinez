@@ -4,16 +4,27 @@
 
 <hibernate-mapping>
 
-	<class name="Modelo.videojuego" table="videojuegos">
+	<class name="Modelo.videojuegos" table="videojuegos">
 		<id name="ID" type="int">
 			<column name="ID" />
 			<generator class="increment" />
 		</id>
 
-		<property name="empName" type="string">
-			<column name="nombre" length="30" not-null="true" />
+		<property name="Nombre" type="string">
+			<column name="Nombre" length="30" not-null="true" />
 		</property>
 		
+		<property name="Fecha_lanzamiento" type="string">
+			<column name="Fecha_lanzamiento" length="30" not-null="true" />
+		</property>
+		
+		<property name="Desarrollador" type="string">
+			<column name="Desarrollador" length="30" not-null="true" />
+		</property>
+		
+		<property name="Plataforma" type="string">
+			<column name="Plataforma" length="30" not-null="true" />
+		</property>
 	</class>
 
 </hibernate-mapping>
