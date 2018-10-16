@@ -4,8 +4,7 @@ public class personajes {
 	
 	private int ID;
 	private String Nombre_Personaje;
-	private int ID_Juego;
-	
+	private videojuegos juego;
 	//Constructor de la tabla personajes
 	public personajes(){
 		
@@ -24,11 +23,12 @@ public class personajes {
 	public void setNombre_Personaje(String nombre_Personaje) {
 		this.Nombre_Personaje = nombre_Personaje;
 	}
-	public int getID_Juego() {
-		return ID_Juego;
+	public videojuegos getjuego(){
+		return juego;
+		
 	}
-	public void setID_Juego(int iD_Juego) {
-		this.ID_Juego = iD_Juego;
+	public void setjuego() {
+		this.juego = juego;
 	}
 
 }

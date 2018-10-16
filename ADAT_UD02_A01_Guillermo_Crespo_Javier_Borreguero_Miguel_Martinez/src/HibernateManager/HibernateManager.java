@@ -28,7 +28,7 @@ public class HibernateManager {
 		
 		p.setID(1);
 		p.setNombre_Personaje("");
-		p.setID_Juego(1);
+		p.setjuego();
 		
 		SessionFactory sf = new Configuration().configure().buildSessionFactory();
 		Session s = sf.openSession();
