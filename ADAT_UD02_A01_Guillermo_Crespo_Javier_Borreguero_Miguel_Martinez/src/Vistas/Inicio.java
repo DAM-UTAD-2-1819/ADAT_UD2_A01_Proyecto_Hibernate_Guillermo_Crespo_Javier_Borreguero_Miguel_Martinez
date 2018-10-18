@@ -413,8 +413,7 @@ public class Inicio {
 			int eleccion1 = opt1.nextInt();
 			switch (eleccion1) {
 			case 1:
-				// Añadir Método Hibernate
-				// mControlador.BBDD2TXT();
+				mControlador.BBDD2TXTHB();
 				break;
 			case 2:
 				// Añadir Método Hibernate

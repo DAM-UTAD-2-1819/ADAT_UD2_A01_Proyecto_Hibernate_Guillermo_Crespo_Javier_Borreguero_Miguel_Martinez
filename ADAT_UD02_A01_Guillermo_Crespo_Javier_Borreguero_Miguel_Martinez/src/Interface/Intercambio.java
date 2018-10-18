@@ -17,7 +17,7 @@ public interface Intercambio {
 	public HashMap<Integer, Personajes> AñadirPer();
 	
 	
-	public HashMap<Integer, Personajes> EscribirTodosHB();
+	public HashMap<Integer, Videojuego> EscribirTodosHB();
 	public HashMap<Integer, Videojuego> AñadirHB();
 	public HashMap<Integer, Videojuego>LeerTodosHB();
 	

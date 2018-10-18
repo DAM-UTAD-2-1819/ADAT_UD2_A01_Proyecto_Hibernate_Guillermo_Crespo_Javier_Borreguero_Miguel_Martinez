@@ -281,7 +281,7 @@ public class BD_Manager implements Intercambio {
 	}
 
 	@Override
-	public HashMap<Integer, Personajes> EscribirTodosHB() {
+	public HashMap<Integer, Videojuego > EscribirTodosHB() {
 		// TODO Auto-generated method stub
 		return null;
 	}

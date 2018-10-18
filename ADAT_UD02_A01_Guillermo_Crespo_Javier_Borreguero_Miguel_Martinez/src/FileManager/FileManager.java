@@ -13,8 +13,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Properties;
 import java.util.Map.Entry;
+
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
 import Controlador.Controlador;
 
@@ -22,6 +29,7 @@ import java.util.Scanner;
 
 import Interface.Intercambio;
 import Modelo.Modelo;
+import Modelo.videojuegos;
 import Videojuegos.Personajes;
 import Videojuegos.Videojuego;
 import Vistas.Inicio;
@@ -209,16 +217,64 @@ public class FileManager implements Intercambio {
 
 
 	@Override
-	public HashMap<Integer, Personajes> EscribirTodosHB() {
-		// TODO Auto-generated method stub
-		return null;
+	public HashMap<Integer, Videojuego> EscribirTodosHB() {
+		videojuegos v = new videojuegos();
+		Controlador mControlador = new Controlador();
+		v.getID();
+		v.getNombre();
+		v.getFecha_Lanzamiento();
+		v.getDesarrollador();
+		v.getPlataforma();
+		try {
+		BufferedWriter bw = new BufferedWriter(new FileWriter(archivo_videojuegos, false));
+		
+		SessionFactory sf = new Configuration().configure().buildSessionFactory();
+		Session s = sf.openSession();
+		s.beginTransaction();
+		Query q = s.createQuery("Select v from videojuegos v");
+		List resultado = q.list();
+		Iterator empleadositerador = resultado.iterator();
+		
+		
+		while (empleadositerador.hasNext()) {
+			videojuegos vdo = (videojuegos) empleadositerador.next();
+			int ID = vdo.getID();
+			String Nombre = vdo.getNombre();
+			String Fecha=vdo.getFecha_Lanzamiento();
+			String Plataforma=vdo.getPlataforma();
+			String Desarrollador=vdo.getDesarrollador();
+			
+			Videojuego mVideojuego = new Videojuego(Nombre, Fecha, Desarrollador, Plataforma);
+		
+				ListaVideojuegos.put(ID, mVideojuego);
+		}
+	
+		s.getTransaction().commit();
+		s.close();
+		
+		for (Entry<Integer, Videojuego> entry : ListaVideojuegos.entrySet()) {
+			
+		bw.write("ID: " + entry.getKey() + "\n" + "Nombre: " + entry.getValue().getNombre() + "\n"
+				+ "Fecha de Lanzamiento: " + entry.getValue().getFecha_Lanzamiento() + "\n" + "Desarrollador: "
+				+ entry.getValue().getDesarrollador() + "\n" + "Plataforma: " + entry.getValue().getPlataforma()+ "\n");
+							}
+		
+							bw.close();
+							mControlador.Cargar_Inicio();
+					} catch (IOException  e1) {
+						
+							e1.printStackTrace();
+						}
+						return ListaVideojuegos;
+					
+		
 	}
 
 
 	@Override
 	public HashMap<Integer, Videojuego> AñadirHB() {
-		// TODO Auto-generated method stub
 		return null;
+	
 	}
 
 
