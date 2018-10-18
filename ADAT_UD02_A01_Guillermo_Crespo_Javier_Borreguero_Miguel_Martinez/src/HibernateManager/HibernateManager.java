@@ -42,11 +42,10 @@ public class HibernateManager {
 		Iterator empleadositerador = resultado.iterator();
 		while (empleadositerador.hasNext()) {
 			videojuegos vdo = (videojuegos) empleadositerador.next();
-			System.out.println("id:" + vdo.getID());
+			System.out.println("id: "+vdo.getID()+"\n"  +   "Nombre: "+vdo.getNombre()+"\n"   +"Fecha Lanzamiento: "+vdo.getFecha_Lanzamiento()+"\n"   
+			+ "Desarollador: "+vdo.getDesarrollador()+"\n"  + "Plataforma: "+vdo.getPlataforma()+"\n" );
 		}
 	
-		
-		
 		s.getTransaction().commit();
 		s.close();
 		System.exit(0);
