@@ -44,7 +44,7 @@ public class HibernateManager {
 			videojuegos vdo = (videojuegos) empleadositerador.next();
 			System.out.println("id:" + vdo.getID());
 		}
-		System.out.println("Hola");
+	
 		
 		s.getTransaction().commit();
 		s.close();
