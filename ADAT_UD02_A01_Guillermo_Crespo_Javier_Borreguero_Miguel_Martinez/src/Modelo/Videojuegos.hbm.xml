@@ -14,8 +14,8 @@
 			<column name="Nombre" length="30" not-null="true" />
 		</property>
 		
-		<property name="Fecha_lanzamiento" type="string">
-			<column name="Fecha_lanzamiento" length="30" not-null="true" />
+		<property name="Fecha_Lanzamiento" type="string">
+			<column name="Fecha_Lanzamiento" length="30" not-null="true" />
 		</property>
 		
 		<property name="Desarrollador" type="string">

@@ -4,10 +4,10 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.Query;
+//import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-
 import Modelo.videojuegos;
 import Modelo.personajes;
 
@@ -34,7 +34,7 @@ public class HibernateManager {
 		Session s = sf.openSession();
 		s.beginTransaction();
 		
-		Query q = s.createSQLQuery("Select a from Employee a");
+		Query q = s.createQuery("Select v from videojuegos v");
 		// s.save(e);
 		// s.update(e);
 

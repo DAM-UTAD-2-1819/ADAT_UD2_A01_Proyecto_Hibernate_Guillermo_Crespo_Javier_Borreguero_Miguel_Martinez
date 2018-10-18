@@ -13,5 +13,7 @@
 <!-- 		<property name="hibernate.hbm2ddl.auto">create-drop</property> -->
 		<mapping resource="Modelo/Videojuegos.hbm.xml" />
 <!-- 		<mapping resource="hibernate.cfg.xml" /> -->
+ <mapping class="Modelo.videojuegos"/>
+        <mapping class="Modelo.personajes"/>
 	</session-factory>
 </hibernate-configuration>

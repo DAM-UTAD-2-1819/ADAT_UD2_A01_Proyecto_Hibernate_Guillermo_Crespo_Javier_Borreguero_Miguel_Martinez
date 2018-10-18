@@ -17,7 +17,7 @@ public class videojuegos {
 		return ID;
 	}
 
-	public void setID(int iD) {
+	public void setID(int ID) {
 		this.ID = ID;
 	}
 
@@ -33,16 +33,16 @@ public class videojuegos {
 		return Fecha_Lanzamiento;
 	}
 
-	public void setFecha_Lanzamiento(String fecha_Lanzamiento) {
-		this.Fecha_Lanzamiento = fecha_Lanzamiento;
+	public void setFecha_Lanzamiento(String Fecha_Lanzamiento) {
+		this.Fecha_Lanzamiento = Fecha_Lanzamiento;
 	}
 
 	public String getDesarrollador() {
 		return Desarrollador;
 	}
 
-	public void setDesarrollador(String desarrollador) {
-		this.Desarrollador = desarrollador;
+	public void setDesarrollador(String Desarrollador) {
+		this.Desarrollador = Desarrollador;
 	}
 
 	public String getPlataforma() {
