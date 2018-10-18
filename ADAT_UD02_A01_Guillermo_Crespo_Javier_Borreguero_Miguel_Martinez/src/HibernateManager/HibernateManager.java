@@ -46,6 +46,7 @@ public class HibernateManager {
 		}
 	
 		
+		
 		s.getTransaction().commit();
 		s.close();
 		System.exit(0);

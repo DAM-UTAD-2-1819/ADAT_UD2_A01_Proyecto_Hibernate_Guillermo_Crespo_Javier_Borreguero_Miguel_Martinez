@@ -50,7 +50,7 @@ public class Modelo {
 		getBBDDini();
 
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
+			Class.forName("com.mysql.jdbc.Driver");
 			conexion = DriverManager.getConnection(url, login, pass);
 			if (conexion != null) {
 				
