@@ -207,4 +207,25 @@ public class FileManager implements Intercambio {
 		return listaPersonajes;
 	}
 
+
+	@Override
+	public HashMap<Integer, Personajes> EscribirTodosHB() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public HashMap<Integer, Videojuego> AñadirHB() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public HashMap<Integer, Videojuego> LeerTodosHB() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

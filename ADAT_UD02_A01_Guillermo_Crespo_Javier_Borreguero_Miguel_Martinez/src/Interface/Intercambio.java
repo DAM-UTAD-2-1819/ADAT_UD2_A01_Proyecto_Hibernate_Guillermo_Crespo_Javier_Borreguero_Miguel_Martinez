@@ -1,6 +1,5 @@
 package Interface;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 
 import Videojuegos.Personajes;
@@ -16,5 +15,12 @@ public interface Intercambio {
 	public HashMap<Integer, Personajes> EscribirTodosPer();
 	public HashMap<Integer, Personajes>LeerTodosPer();
 	public HashMap<Integer, Personajes> AñadirPer();
+	
+	
+	public HashMap<Integer, Personajes> EscribirTodosHB();
+	public HashMap<Integer, Videojuego> AñadirHB();
+	public HashMap<Integer, Videojuego>LeerTodosHB();
+	
+	
 	
 }
