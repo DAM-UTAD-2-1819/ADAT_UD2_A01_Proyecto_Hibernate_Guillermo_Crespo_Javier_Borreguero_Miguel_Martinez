@@ -35,7 +35,7 @@ public class Inicio {
 	private String archivo_personajes = "src/Modelo/personajes.txt";
 
 	public void CargarMenuPrincipal() throws SQLException, IOException {
-		String menu ="¿En que modo quieres trabajar?\n" + "1:Normal\n"+"2:Hibernate";
+		String menu = "¿En que modo quieres trabajar?\n" + "1:Normal\n" + "2:Hibernate";
 		System.out.println(menu);
 		Scanner opt = new Scanner(System.in);
 		System.out.print("Elija una opción:  ");
@@ -54,6 +54,7 @@ public class Inicio {
 			break;
 		}
 	}
+
 	public void CargarMenu() throws SQLException, IOException {
 		Controlador mControlador = new Controlador();
 
@@ -77,7 +78,7 @@ public class Inicio {
 			int eleccion1 = opt1.nextInt();
 			switch (eleccion1) {
 			case 1:
-				
+
 				mControlador.Escribir_Fichero();
 				break;
 			case 2:
@@ -124,7 +125,7 @@ public class Inicio {
 
 		case 4:
 			mControlador.TXT2BBDD();
-			
+
 			break;
 		case 5:
 			System.out.println("  1: Leer Tabla Videojuegos");
@@ -291,7 +292,6 @@ public class Inicio {
 			System.out.println("ID_Juego: ");
 			String id_juegotxt = scanner.nextLine();
 			int id_juego = Integer.parseInt(id_juegotxt);
-		
 
 			Personajes mPersonaje = new Personajes(namePtxt, id_juego);
 
@@ -373,10 +373,10 @@ public class Inicio {
 
 		}
 	}
-	
-	
+
 	/*
-	 * ------------------------------------------------------------------------------
+	 * -----------------------------------------------------------------------------
+	 * -
 	 * 
 	 * 
 	 * 
@@ -387,120 +387,118 @@ public class Inicio {
 	 * 
 	 * -----------------------------------------------------------------------------
 	 */
-	
+
 	public void CargarMenuHibernate() throws SQLException, IOException {
-		
+
 		Controlador mControlador = new Controlador();
 
 		// TODO Auto-generated method stub
-		System.out.println("1: Crear fichero");
-		System.out.println("2: Leer fichero");
-		System.out.println("3: Copiar BBDD a fichero");
-		System.out.println("4: Copiar fichero a BBDD");
-		System.out.println("5: Leer BBDD");
-		System.out.println("6: Añadir BBDD");
+		System.out.println("1: Copiar BBDD a fichero");
+		System.out.println("2: Copiar fichero a BBDD");
+		System.out.println("3: Leer BBDD");
+		System.out.println("4: Añadir BBDD");
+		System.out.println("5: Eliminar BBDD");
+		System.out.println("6: Actualizar BBDD");
 
 		Scanner opt = new Scanner(System.in);
 		System.out.print("Elija una opción:  ");
 		int eleccion = opt.nextInt();
 		switch (eleccion) {
 		case 1:
-			System.out.println("   1: Crear Fichero Videojuegos");
-			System.out.println("   2: Crear Fichero Personajes");
+
+			System.out.println("  1: Pasar tabla Videojuegos a Fichero");
+			System.out.println("  2: Pasar tabla Personajes a Fichero");
 			Scanner opt1 = new Scanner(System.in);
-			System.out.print("     Elija una opción:  ");
+			System.out.print("    Elija una opción:  ");
 			int eleccion1 = opt1.nextInt();
 			switch (eleccion1) {
 			case 1:
-				//Añadir Método Hibernate
-			
-				break;
-				//Añadir Método Hibernatecase 2:
-				
-			default:
-				break;
-			}
-
-			break;
-		case 2:
-			
-			System.out.println("   1: Leer Videojuegos");
-			System.out.println("   2: Leer Personajes");
-			Scanner opt2 = new Scanner(System.in);
-			System.out.print("     Elija una opción:  ");
-			int eleccion2 = opt2.nextInt();
-			switch (eleccion2) {
-			case 1:
-				//Añadir Método Hibernate
-			//	mControlador.Leer_Fichero();
+				// Añadir Método Hibernate
+				// mControlador.BBDD2TXT();
 				break;
 			case 2:
-				//Añadir Método Hibernate
-			//	mControlador.Leer_FicheroPer();
+				// Añadir Método Hibernate
+				// mControlador.BBDD2TXTPer();
 			default:
 				break;
+
 			}
+			break;
+
+		case 2:
+			// Añadir Método Hibernate
+			// mControlador.TXT2BBDD();
 
 			break;
 		case 3:
-			
-			System.out.println("  1: Pasar tabla Videojuegos a Fichero");
-			System.out.println("  2: Pasar tabla Personajes a Fichero");
+			System.out.println("  1: Leer Tabla Videojuegos");
+			System.out.println("  2: Leer Tabla Personajes");
 			Scanner opt3 = new Scanner(System.in);
 			System.out.print("    Elija una opción:  ");
 			int eleccion3 = opt3.nextInt();
 			switch (eleccion3) {
 			case 1:
-				//Añadir Método Hibernate
-				//mControlador.BBDD2TXT();
+				// Añadir Método Hibernate
+				// mControlador.ImprimirDatos();
 				break;
 			case 2:
-				//Añadir Método Hibernate
-				//mControlador.BBDD2TXTPer();
+				// Añadir Método Hibernate
+				// mControlador.ImprimirDatosPer();
 			default:
 				break;
-
 			}
-			break;
 
+			break;
 		case 4:
-			//Añadir Método Hibernate
-			//mControlador.TXT2BBDD();
-			
+			System.out.println("   1: Insertar un Videojuego");
+			System.out.println("   2: Insertar un Personajes");
+			Scanner opt4 = new Scanner(System.in);
+			System.out.print("     Elija una opción:  ");
+			int eleccion4 = opt4.nextInt();
+			switch (eleccion4) {
+			case 1:
+				// Añadir Método Hibernate
+				// mControlador.InsertarBBDD();
+				break;
+			case 2:
+				// Añadir Método Hibernate
+				// mControlador.InsertarBBDDPer();
+			default:
+				break;
+			}
+
 			break;
 		case 5:
-			System.out.println("  1: Leer Tabla Videojuegos");
-			System.out.println("  2: Leer Tabla Personajes");
+			System.out.println("   1: Eliminar un Videojuego");
+			System.out.println("   2: Eliminar un Personaje");
 			Scanner opt5 = new Scanner(System.in);
-			System.out.print("    Elija una opción:  ");
+			System.out.print("     Elija una opción:  ");
 			int eleccion5 = opt5.nextInt();
 			switch (eleccion5) {
 			case 1:
-				//Añadir Método Hibernate
-			//	mControlador.ImprimirDatos();
+				// Añadir Método Hibernate
+				// mControlador.InsertarBBDD();
 				break;
 			case 2:
-				//Añadir Método Hibernate
-				//mControlador.ImprimirDatosPer();
+				// Añadir Método Hibernate
+				// mControlador.InsertarBBDDPer();
 			default:
 				break;
 			}
-
-			break;
 		case 6:
-			System.out.println("   1: Insertar un Videojuego");
-			System.out.println("   2: Insertar un Personajes");
+			System.out.println("   1: Actualizar un Videojuego");
+			System.out.println("   2: Actualizar un Personaje");
 			Scanner opt6 = new Scanner(System.in);
 			System.out.print("     Elija una opción:  ");
 			int eleccion6 = opt6.nextInt();
 			switch (eleccion6) {
 			case 1:
-				//Añadir Método Hibernate
-				//mControlador.InsertarBBDD();
+				// Añadir Método Hibernate
+				// mControlador.InsertarBBDD();
 				break;
 			case 2:
-				//Añadir Método Hibernate
-				//mControlador.InsertarBBDDPer();
+				// Añadir Método Hibernate
+				// mControlador.InsertarBBDDPer();
 			default:
 				break;
 			}
@@ -637,7 +635,6 @@ public class Inicio {
 			System.out.println("ID_Juego: ");
 			String id_juegotxt = scanner.nextLine();
 			int id_juego = Integer.parseInt(id_juegotxt);
-		
 
 			Personajes mPersonaje = new Personajes(namePtxt, id_juego);
 
@@ -719,5 +716,5 @@ public class Inicio {
 
 		}
 	}
-	
+
 }
