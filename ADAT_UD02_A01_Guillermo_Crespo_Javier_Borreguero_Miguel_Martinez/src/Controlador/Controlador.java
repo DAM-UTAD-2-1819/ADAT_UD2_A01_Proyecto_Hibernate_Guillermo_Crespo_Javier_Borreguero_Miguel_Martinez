@@ -9,10 +9,12 @@ import Videojuegos.Videojuego;
 import Vistas.*;
 import Interface.Intercambio;
 import FileManager.FileManager;
+import HibernateManager.HibernateManager;
 
 public class Controlador {
 	BD_Manager mBD = new BD_Manager();
 	FileManager mFM = new FileManager();
+	HibernateManager mHM = new HibernateManager();
 	Inicio mVista = new Inicio();
 	public void ImprimirDatos() {
 		mBD.LeerTodos();
@@ -48,12 +50,16 @@ public class Controlador {
 	public void BBDD2TXT(){
 		mFM.Añadir();
 	}
-	public void BBDD2TXTHB(){
-		mFM.EscribirTodosHB();
-	}
 	public void BBDD2TXTPer(){
-		mFM.EscribirTodosPerHB();
+		mFM.EscribirTodosPer();
 	}
+	public void BBDD2TXTHB(){
+		mFM.EscribirTodos();
+	}
+	public void BBDD2TXTHBPer(){
+		mHM.EscribirTodosPer();
+	}
+	
 	
 	public void Cargar_Inicio() {
 		// TODO Auto-generated method stub

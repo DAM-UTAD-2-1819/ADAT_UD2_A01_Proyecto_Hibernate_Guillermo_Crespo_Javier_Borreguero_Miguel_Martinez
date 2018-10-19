@@ -416,8 +416,9 @@ public class Inicio {
 				mControlador.BBDD2TXTHB();
 				break;
 			case 2:
-				// Añadir Método Hibernate
-				mControlador.BBDD2TXTPer();
+				
+				mControlador.BBDD2TXTHBPer();
+				break;
 			default:
 				break;
 
