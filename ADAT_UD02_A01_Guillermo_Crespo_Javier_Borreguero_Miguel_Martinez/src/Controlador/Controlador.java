@@ -52,7 +52,7 @@ public class Controlador {
 		mFM.EscribirTodosHB();
 	}
 	public void BBDD2TXTPer(){
-		mFM.AñadirPer();
+		mFM.EscribirTodosPerHB();
 	}
 	
 	public void Cargar_Inicio() {
