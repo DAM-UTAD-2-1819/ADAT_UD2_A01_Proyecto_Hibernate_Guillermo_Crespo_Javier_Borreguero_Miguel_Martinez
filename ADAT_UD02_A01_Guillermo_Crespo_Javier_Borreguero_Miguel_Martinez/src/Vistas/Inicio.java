@@ -113,7 +113,7 @@ public class Inicio {
 			int eleccion3 = opt3.nextInt();
 			switch (eleccion3) {
 			case 1:
-				mControlador.BBDD2TXT();
+				mControlador.BBDD2TXTHB();
 				break;
 			case 2:
 				mControlador.BBDD2TXTPer();
@@ -417,7 +417,7 @@ public class Inicio {
 				break;
 			case 2:
 				
-				mControlador.BBDD2TXTHBPer();
+				mControlador.BBDD2TXTPerHB();
 				break;
 			default:
 				break;

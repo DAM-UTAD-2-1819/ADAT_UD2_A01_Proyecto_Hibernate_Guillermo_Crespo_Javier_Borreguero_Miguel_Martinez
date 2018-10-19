@@ -54,9 +54,9 @@ public class Controlador {
 		mFM.EscribirTodosPer();
 	}
 	public void BBDD2TXTHB(){
-		mFM.EscribirTodos();
+		mHM.EscribirTodos();
 	}
-	public void BBDD2TXTHBPer(){
+	public void BBDD2TXTPerHB(){
 		mHM.EscribirTodosPer();
 	}
 	
