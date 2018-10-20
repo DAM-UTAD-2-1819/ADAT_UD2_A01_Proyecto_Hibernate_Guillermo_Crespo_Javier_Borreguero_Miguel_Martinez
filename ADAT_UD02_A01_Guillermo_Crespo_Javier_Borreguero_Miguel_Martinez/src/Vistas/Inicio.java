@@ -36,6 +36,7 @@ import HibernateManager.HibernateManager;
 import Interface.Intercambio;
 import Main.Main;
 import Modelo.Modelo;
+import Modelo.personajes;
 import Modelo.videojuegos;
 import Videojuegos.Personajes;
 import Videojuegos.Videojuego;
@@ -539,75 +540,7 @@ public class Inicio {
 	}
 
 
-	public void PedirDatoPerDBHB(HashMap<Integer, Personajes> listaPersonajes) {
-		// TODO Auto-generated method stub
-		BD_Manager mBD = new BD_Manager();
-		Modelo mModelo = new Modelo();
-		Controlador mControlador = new Controlador();
-		PreparedStatement pstm, pstm1;
-		String cargar = "Select * from personajes";
-		String cargar1 = "Select * from videojuegos";
-		ResultSet rsetper, rset;
-		try {
-			pstm = mModelo.conexion.prepareStatement(cargar);
-			pstm1 = mModelo.conexion.prepareStatement(cargar1);
-			rsetper = pstm.executeQuery();
-			rset = pstm1.executeQuery();
-
-			if (rset.next()) {
-				Scanner scanner = new Scanner(System.in);
-				System.out.println("ID_Personaje: ");
-				String idtxt = scanner.nextLine();
-				int idper = Integer.parseInt(idtxt);
-
-				while (rsetper.next()) {
-					if (idper == (rsetper.getInt(1))) {
-						System.err.println("Este ID ya existe, por favor introduzca otro\n");
-						idper = 0;
-						mControlador.InsertarBBDDPer();
-						;
-					}
-
-				}
-				System.out.println("Nombre del Personaje: ");
-				String namePtxt = scanner.nextLine();
-
-				mControlador.ImprimirVideojuegos();
-				System.out.println("----Elige el juego al que pertenece este Personaje");
-				Scanner scanner1 = new Scanner(System.in);
-				System.out.println("ID_Juego: ");
-				String idj = scanner1.nextLine();
-				int id = Integer.parseInt(idj);
-				Personajes mPersonaje = new Personajes(namePtxt, id);
-
-				listaPersonajes.put(idper, mPersonaje);
-
-			} else {
-				System.out.print("¡¡¡¡¡No hay ningún juego añadido por favor añade al menos uno!!!!!\n");
-				System.out.print("¿Quieres añadirlo ahora?\n");
-				System.out.print("   1: SI\n");
-				System.out.print("   2: NO\n");
-				Scanner opt6 = new Scanner(System.in);
-				System.out.print("     Elija una opción:  \n");
-				int eleccion4 = opt6.nextInt();
-				switch (eleccion4) {
-				case 1:
-					mControlador.InsertarBBDD();
-					break;
-				case 2:
-
-					break;
-				default:
-					break;
-				}
-			}
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-
-		}
-	}
+	
 
 	public void PedirDatosHB(HashMap<Integer, Videojuego> ListaVideojuegos) {
 		Controlador mControlador = new Controlador();
@@ -641,5 +574,95 @@ public class Inicio {
 			String desarrolladortxt = scanner.nextLine();
 			Videojuego mVideojuego = new  Videojuego(nametxt, fechatxt, plataformatxt, desarrolladortxt);
 			ListaVideojuegos.put(id, mVideojuego);
+	}
+	
+	
+	
+	public void PedirDatoPerDBHB(HashMap<Integer, Personajes> listaPersonajes) {
+		// TODO Auto-generated method stub
+		BD_Manager mBD = new BD_Manager();
+		Modelo mModelo = new Modelo();
+		Controlador mControlador = new Controlador();
+		PreparedStatement pstm, pstm1;
+		String cargar = "Select * from personajes";
+		String cargar1 = "Select * from videojuegos";
+		ResultSet rsetper, rset;
+		try {
+			pstm = mModelo.conexion.prepareStatement(cargar);
+			pstm1 = mModelo.conexion.prepareStatement(cargar1);
+			rsetper = pstm.executeQuery();
+			rset = pstm1.executeQuery();
+
+			
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		}
+	}
+	
+	public void PedirDatosPerHB(HashMap<Integer, Personajes> listaPersonajes) {
+		Controlador mControlador = new Controlador();
+		HibernateManager mHM = new HibernateManager();
+		Query qper = mHM.s.createQuery("Select p from personajes p");
+		List resultadoper = qper.list();
+		Iterator personajesiterador = resultadoper.iterator();
+		Query qvdo = mHM.s.createQuery("Select v from videojuegos v");
+		List resultadovdo = qvdo.list();
+		Iterator videojuegoiterador = resultadovdo.iterator();
+		if (videojuegoiterador.hasNext()) {
+			
+			Scanner scanner = new Scanner(System.in);
+			System.out.println("ID_Personaje: ");
+			String idtxt = scanner.nextLine();
+			int idper = Integer.parseInt(idtxt);
+
+			while (personajesiterador.hasNext()) {
+				videojuegos vdo = (videojuegos) videojuegoiterador.next();
+				personajes per = (personajes) personajesiterador.next();
+				
+				if (idper == (per.getID())) {
+					System.err.println("Este ID ya existe, por favor introduzca otro\n");
+					idper = 0;
+					//mControlador.InsertarPerHB();
+					
+				}
+				per.setjuego(idper);
+			}
+			System.out.println("Nombre del Personaje: ");
+			String namePtxt = scanner.nextLine();
+
+			mControlador.ImprimirVideojuegos();
+			System.out.println("----Elige el juego al que pertenece este Personaje");
+			Scanner scanner1 = new Scanner(System.in);
+			System.out.println("ID_Juego: ");
+			String idj = scanner1.nextLine();
+			int id = Integer.parseInt(idj);
+			Personajes mPersonaje = new Personajes(namePtxt, id);
+
+			listaPersonajes.put(idper, mPersonaje);
+
+		} else {
+			System.out.print("¡¡¡¡¡No hay ningún juego añadido por favor añade al menos uno!!!!!\n");
+			System.out.print("¿Quieres añadirlo ahora?\n");
+			System.out.print("   1: SI\n");
+			System.out.print("   2: NO\n");
+			Scanner opt6 = new Scanner(System.in);
+			System.out.print("     Elija una opción:  \n");
+			int eleccion4 = opt6.nextInt();
+			switch (eleccion4) {
+			case 1:
+				mControlador.InsertarHB();
+				break;
+			case 2:
+
+				break;
+			default:
+				break;
+			}
+			
+		}
+	
 	}
 }

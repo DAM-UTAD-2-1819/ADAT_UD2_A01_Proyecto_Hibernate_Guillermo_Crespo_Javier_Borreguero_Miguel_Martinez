@@ -8,10 +8,10 @@ public class Personajes {
 	
 	
 	
-	public Personajes( String nombre_Personaje, int id_Juego) {
+	public Personajes( String nombre_Personaje, int id_juegotxt) {
 		
 		this.Nombre_Personaje = nombre_Personaje;
-		this.ID_Juego = id_Juego;
+		this.ID_Juego = id_juegotxt;
 	}
 	
 	
