@@ -45,7 +45,7 @@ public class Inicio {
 	int id = 0;
 	private String archivo_videojuegos = "src/Modelo/videojuegos.txt";
 	private String archivo_personajes = "src/Modelo/personajes.txt";
-	
+
 	public void CargarMenuPrincipal() throws SQLException, IOException {
 		String menu = "¿En que modo quieres trabajar?\n" + "1:Normal\n" + "2:Hibernate";
 		System.out.println(menu);
@@ -185,7 +185,7 @@ public class Inicio {
 			System.out.println("Nombre: " + videojuego.getValue().getNombre());
 			System.out.println("Plataforma: " + videojuego.getValue().getPlataforma());
 			System.out.println("Fecha de Lanzamiento: " + videojuego.getValue().getFecha_Lanzamiento());
-			System.out.println("Desarrollador: " + videojuego.getValue().getDesarrollador()+"\n");
+			System.out.println("Desarrollador: " + videojuego.getValue().getDesarrollador() + "\n");
 		}
 	}
 
@@ -193,7 +193,7 @@ public class Inicio {
 		for (Entry<Integer, Personajes> videojuego : listaPersonajes.entrySet()) {
 			System.out.println("ID: " + videojuego.getKey().toString());
 			System.out.println("Nombre: " + videojuego.getValue().getNombre_Personaje());
-			System.out.println("ID_Juego: " + videojuego.getValue().getID_Juego()+"\n");
+			System.out.println("ID_Juego: " + videojuego.getValue().getID_Juego() + "\n");
 		}
 	}
 
@@ -428,7 +428,7 @@ public class Inicio {
 				mControlador.BBDD2TXTHB();
 				break;
 			case 2:
-				
+
 				mControlador.BBDD2TXTPerHB();
 				break;
 			default:
@@ -453,7 +453,7 @@ public class Inicio {
 				mControlador.ImprimirDatosHB();
 				break;
 			case 2:
-			
+
 				mControlador.ImprimirDatosPerHB();
 			default:
 				break;
@@ -469,7 +469,7 @@ public class Inicio {
 			switch (eleccion4) {
 			case 1:
 				// Añadir Método Hibernate
-				 mControlador.InsertarHB();
+				mControlador.InsertarHB();
 				break;
 			case 2:
 				// Añadir Método Hibernate
@@ -539,9 +539,6 @@ public class Inicio {
 		}
 	}
 
-
-	
-
 	public void PedirDatosHB(HashMap<Integer, Videojuego> ListaVideojuegos) {
 		Controlador mControlador = new Controlador();
 		HibernateManager mHM = new HibernateManager();
@@ -552,31 +549,30 @@ public class Inicio {
 		System.out.println("ID_Videojuego: ");
 		String idtxt = scanner.nextLine();
 		id = Integer.parseInt(idtxt);
-			while (videojuegositerador.hasNext()) {
-				videojuegos vdo = (videojuegos) videojuegositerador.next();
-				
-				if (id == (vdo.getID())) {
+		while (videojuegositerador.hasNext()) {
+			videojuegos vdo = (videojuegos) videojuegositerador.next();
 
-					System.err.println("Este ID ya existe, por favor introduzca otro\n");
-					
-					mControlador.InsertarHB();
-				}
-				vdo.setID(id);
-				
+			if (id == (vdo.getID())) {
+
+				System.err.println("Este ID ya existe, por favor introduzca otro\n");
+
+				mControlador.InsertarHB();
 			}
-			System.out.println("Nombre del Videojuego: ");
-			String nametxt = scanner.nextLine();
-			System.out.println("Fecha de Lanzamiento: ");
-			String fechatxt = scanner.nextLine();
-			System.out.println("Plataforma (DS, GBA, N64): ");
-			String plataformatxt = scanner.nextLine();
-			System.out.println("Desarrollador: ");
-			String desarrolladortxt = scanner.nextLine();
-			Videojuego mVideojuego = new  Videojuego(nametxt, fechatxt, plataformatxt, desarrolladortxt);
-			ListaVideojuegos.put(id, mVideojuego);
+			vdo.setID(id);
+
+		}
+		System.out.println("Nombre del Videojuego: ");
+		String nametxt = scanner.nextLine();
+		System.out.println("Fecha de Lanzamiento: ");
+		String fechatxt = scanner.nextLine();
+		System.out.println("Plataforma (DS, GBA, N64): ");
+		String plataformatxt = scanner.nextLine();
+		System.out.println("Desarrollador: ");
+		String desarrolladortxt = scanner.nextLine();
+		Videojuego mVideojuego = new Videojuego(nametxt, fechatxt, plataformatxt, desarrolladortxt);
+		ListaVideojuegos.put(id, mVideojuego);
 	}
-	
-	
+
 	public void PedirDatosPerHB(HashMap<Integer, Personajes> listaPersonajes) {
 		Controlador mControlador = new Controlador();
 		HibernateManager mHM = new HibernateManager();
@@ -587,7 +583,7 @@ public class Inicio {
 		List resultadovdo = qvdo.list();
 		Iterator videojuegoiterador = resultadovdo.iterator();
 		if (videojuegoiterador.hasNext()) {
-			
+
 			Scanner scanner = new Scanner(System.in);
 			System.out.println("ID_Personaje: ");
 			String idtxt = scanner.nextLine();
@@ -595,12 +591,12 @@ public class Inicio {
 
 			while (personajesiterador.hasNext()) {
 				personajes per = (personajes) personajesiterador.next();
-				
+
 				if (idper == (per.getID())) {
 					System.err.println("Este ID ya existe, por favor introduzca otro\n");
 					idper = 0;
 					mControlador.InsertarPerHB();
-					
+
 				}
 				per.setjuego(idper);
 			}
@@ -635,8 +631,21 @@ public class Inicio {
 			default:
 				break;
 			}
-			
+
 		}
-	
+
+	}
+	public void EliminarDatosHB (HashMap<Integer, Videojuego> ListaVideojuegos) {
+		
+		HibernateManager mHM = new HibernateManager();
+//		Query q = mHM.s.createQuery("Delete v from videojuegos v");;
+//		List resultado = q.list();
+//		Iterator videojuegositerador = resultado.iterator();
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Nombre del Videojuego que quiere borrar: ");
+		String nametxt = scanner.nextLine();
+		mHM.EliminarHB(nametxt);
+		
+		
 	}
 }
