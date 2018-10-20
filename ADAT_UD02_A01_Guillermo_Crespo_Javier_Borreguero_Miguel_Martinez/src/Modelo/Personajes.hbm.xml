@@ -14,7 +14,10 @@
 			<column name="Nombre_Personaje" length="30" not-null="true" />
 		</property>
 		
-		<many-to-one name="videojuegos" column="ID" not-null="true"/>
+		<property name="juego" type="int">
+			<column name="ID_Juego"/>
+		</property>
+
 	</class>
 
 </hibernate-mapping>

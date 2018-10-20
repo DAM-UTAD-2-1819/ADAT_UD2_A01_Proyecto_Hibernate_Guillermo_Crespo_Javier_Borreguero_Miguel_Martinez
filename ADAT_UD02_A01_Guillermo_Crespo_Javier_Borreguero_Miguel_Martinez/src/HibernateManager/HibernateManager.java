@@ -96,12 +96,12 @@ public class HibernateManager implements Intercambio  {
 			p.getNombre_Personaje();
 			p.getjuego();
 			try {
-				BufferedWriter bw2 = new BufferedWriter(new FileWriter(archivo_personajes, false));
-				SessionFactory sf2 = new Configuration().configure().buildSessionFactory();
-				Session s2 = sf2.openSession();
-				s2.beginTransaction();
-				Query q2 = s2.createQuery("Select p from personajes p");
-				List resultado2 = q2.list();
+				BufferedWriter bw = new BufferedWriter(new FileWriter(archivo_personajes, false));
+				SessionFactory sf = new Configuration().configure().buildSessionFactory();
+				Session s = sf.openSession();
+				s.beginTransaction();
+				Query q = s.createQuery("Select p from personajes p");
+				List resultado2 = q.list();
 				Iterator personajesIterator = resultado2.iterator();
 				while (personajesIterator.hasNext()) {
 					personajes pnj = (personajes) personajesIterator.next();
@@ -112,13 +112,13 @@ public class HibernateManager implements Intercambio  {
 					listaPersonajes.put(ID, mPersonajes);
 					
 				}
-				s2.getTransaction().commit();
-				s2.close();
+				s.getTransaction().commit();
+				s.close();
 				for (Entry<Integer, Personajes> entry : listaPersonajes.entrySet()) {
-					bw2.write("ID: " + entry.getKey() + "\n" + "Nombre: " + entry.getValue().getNombre_Personaje()
+					bw.write("ID: " + entry.getKey() + "\n" + "Nombre: " + entry.getValue().getNombre_Personaje()
 							+ "videojuego: " + entry.getValue().getID_Juego());
 				}
-				bw2.close();
+				bw.close();
 				mControlador.Cargar_Inicio();
 				
 			} catch (Exception e) {

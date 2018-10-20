@@ -64,7 +64,7 @@ public class Controlador {
 	public void Cargar_Inicio() {
 		// TODO Auto-generated method stub
 		try {
-			mVista.CargarMenu();
+			mVista.CargarMenuPrincipal();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
