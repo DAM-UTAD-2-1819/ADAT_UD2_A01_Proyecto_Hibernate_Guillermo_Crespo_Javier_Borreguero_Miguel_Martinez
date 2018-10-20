@@ -558,7 +558,7 @@ public class Inicio {
 				if (id == (vdo.getID())) {
 
 					System.err.println("Este ID ya existe, por favor introduzca otro\n");
-
+					
 					mControlador.InsertarHB();
 				}
 				vdo.setID(id);
@@ -577,31 +577,6 @@ public class Inicio {
 	}
 	
 	
-	
-	public void PedirDatoPerDBHB(HashMap<Integer, Personajes> listaPersonajes) {
-		// TODO Auto-generated method stub
-		BD_Manager mBD = new BD_Manager();
-		Modelo mModelo = new Modelo();
-		Controlador mControlador = new Controlador();
-		PreparedStatement pstm, pstm1;
-		String cargar = "Select * from personajes";
-		String cargar1 = "Select * from videojuegos";
-		ResultSet rsetper, rset;
-		try {
-			pstm = mModelo.conexion.prepareStatement(cargar);
-			pstm1 = mModelo.conexion.prepareStatement(cargar1);
-			rsetper = pstm.executeQuery();
-			rset = pstm1.executeQuery();
-
-			
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-
-		}
-	}
-	
 	public void PedirDatosPerHB(HashMap<Integer, Personajes> listaPersonajes) {
 		Controlador mControlador = new Controlador();
 		HibernateManager mHM = new HibernateManager();
@@ -619,7 +594,6 @@ public class Inicio {
 			int idper = Integer.parseInt(idtxt);
 
 			while (personajesiterador.hasNext()) {
-				videojuegos vdo = (videojuegos) videojuegoiterador.next();
 				personajes per = (personajes) personajesiterador.next();
 				
 				if (idper == (per.getID())) {
