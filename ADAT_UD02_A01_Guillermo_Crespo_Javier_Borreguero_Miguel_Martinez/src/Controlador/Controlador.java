@@ -76,6 +76,10 @@ public class Controlador {
 	public void InsertarHB() {
 		mHM.Añadir();
 	}
+	public void InsertarPerHB() {
+		mHM.AñadirPer();
+	}
+	
 	
 	
 	public void Cargar_Inicio() {
