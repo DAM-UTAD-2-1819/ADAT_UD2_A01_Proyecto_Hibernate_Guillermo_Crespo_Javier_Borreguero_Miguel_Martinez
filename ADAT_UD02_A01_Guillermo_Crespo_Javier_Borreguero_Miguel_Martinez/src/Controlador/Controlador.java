@@ -16,6 +16,8 @@ public class Controlador {
 	FileManager mFM = new FileManager();
 	HibernateManager mHM = new HibernateManager();
 	Inicio mVista = new Inicio();
+	
+	//Llamadas a BD_Manager
 	public void ImprimirDatos() {
 		mBD.LeerTodos();
 	}
@@ -31,6 +33,11 @@ public class Controlador {
 	public void InsertarBBDDPer() {
 		mBD.AñadirPer();
 	}
+	public void TXT2BBDD() {
+		mBD.EscribirTodos();
+	}
+	
+	//Llamadas a File_Manager
 	public void Leer_Fichero() {
 		mFM.LeerTodos();
 	}
@@ -43,33 +50,40 @@ public class Controlador {
 	public void Escribir_FicheroPer() {
 		mFM.EscribirTodosPer();
 	}
-	
-	public void TXT2BBDD() {
-		mBD.EscribirTodos();
-	}
 	public void BBDD2TXT(){
 		mFM.Añadir();
 	}
 	public void BBDD2TXTPer(){
 		mFM.EscribirTodosPer();
 	}
+	
+	
+	//Llamadas a Hibernate_Manager
+	
 	public void BBDD2TXTHB(){
 		mHM.EscribirTodos();
 	}
 	public void BBDD2TXTPerHB(){
 		mHM.EscribirTodosPer();
 	}
+	public void ImprimirDatosHB() {
+		mHM.LeerTodos();
+	}
+	
+	public void ImprimirDatosPerHB() {
+		mHM.LeerTodosPer();
+	}
+	public void InsertarHB() {
+		mHM.Añadir();
+	}
 	
 	
 	public void Cargar_Inicio() {
-		// TODO Auto-generated method stub
 		try {
+			
 			mVista.CargarMenuPrincipal();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
+		} catch ( IOException | SQLException e) {
 			e.printStackTrace();
 		}
 	}

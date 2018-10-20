@@ -16,16 +16,27 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Properties;
 import java.util.Scanner;
 
 import BD_Manager.BD_Manager;
 
 import java.util.Map.Entry;
+
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
+import com.mysql.jdbc.util.ResultSetUtil;
+
 import Controlador.Controlador;
+import HibernateManager.HibernateManager;
 import Interface.Intercambio;
 import Main.Main;
 import Modelo.Modelo;
+import Modelo.videojuegos;
 import Videojuegos.Personajes;
 import Videojuegos.Videojuego;
 
@@ -173,7 +184,7 @@ public class Inicio {
 			System.out.println("Nombre: " + videojuego.getValue().getNombre());
 			System.out.println("Plataforma: " + videojuego.getValue().getPlataforma());
 			System.out.println("Fecha de Lanzamiento: " + videojuego.getValue().getFecha_Lanzamiento());
-			System.out.println("Desarrollador: " + videojuego.getValue().getDesarrollador());
+			System.out.println("Desarrollador: " + videojuego.getValue().getDesarrollador()+"\n");
 		}
 	}
 
@@ -181,7 +192,7 @@ public class Inicio {
 		for (Entry<Integer, Personajes> videojuego : listaPersonajes.entrySet()) {
 			System.out.println("ID: " + videojuego.getKey().toString());
 			System.out.println("Nombre: " + videojuego.getValue().getNombre_Personaje());
-			System.out.println("ID_Juego: " + videojuego.getValue().getID_Juego());
+			System.out.println("ID_Juego: " + videojuego.getValue().getID_Juego()+"\n");
 		}
 	}
 
@@ -438,12 +449,11 @@ public class Inicio {
 			int eleccion3 = opt3.nextInt();
 			switch (eleccion3) {
 			case 1:
-				// Añadir Método Hibernate
-				// mControlador.ImprimirDatos();
+				mControlador.ImprimirDatosHB();
 				break;
 			case 2:
-				// Añadir Método Hibernate
-				// mControlador.ImprimirDatosPer();
+			
+				mControlador.ImprimirDatosPerHB();
 			default:
 				break;
 			}
@@ -458,7 +468,7 @@ public class Inicio {
 			switch (eleccion4) {
 			case 1:
 				// Añadir Método Hibernate
-				// mControlador.InsertarBBDD();
+				 mControlador.InsertarHB();
 				break;
 			case 2:
 				// Añadir Método Hibernate
@@ -528,124 +538,6 @@ public class Inicio {
 		}
 	}
 
-	public void PedirDatosFHB(HashMap<Integer, Videojuego> ListaVideojuegos) {
-		Controlador mControlador = new Controlador();
-		try {
-
-			BufferedReader br = new BufferedReader(new FileReader(archivo_videojuegos));
-			Scanner scanner = new Scanner(System.in);
-			System.out.println("ID_Videojuego: ");
-			String idtxt = scanner.nextLine();
-			id = Integer.parseInt(idtxt);
-			String linea;
-			while ((linea = br.readLine()) != null) {
-				if (idtxt.equals(linea.substring(4))) {
-
-					System.err.print("Este ID ya existe, por favor introduzca otro\n");
-
-					mControlador.Escribir_Fichero();
-				}
-
-			}
-			System.out.println("Nombre del Videojuego: ");
-			String nametxt = scanner.nextLine();
-			System.out.println("Plataforma (DS, GBA, N64): ");
-			String plataformatxt = scanner.nextLine();
-			System.out.println("Fecha de Lanzamiento: ");
-			String fechatxt = scanner.nextLine();
-			System.out.println("Desarrollador: ");
-			String desarrolladortxt = scanner.nextLine();
-			Videojuego mVideojuego = new Videojuego(nametxt, fechatxt, desarrolladortxt, plataformatxt);
-
-			ListaVideojuegos.put(id, mVideojuego);
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
-
-	public void PedirDatosDBHB(HashMap<Integer, Videojuego> ListaVideojuegos) {
-		Controlador mControlador = new Controlador();
-		Modelo mModelo = new Modelo();
-		PreparedStatement pstm;
-		String cargar = "Select * from videojuegos";
-		ResultSet rset;
-
-		try {
-			pstm = mModelo.conexion.prepareStatement(cargar);
-			rset = pstm.executeQuery();
-			BufferedReader br = new BufferedReader(new FileReader(archivo_videojuegos));
-			Scanner scanner = new Scanner(System.in);
-			System.out.println("ID_Videojuego: ");
-			String idtxt = scanner.nextLine();
-			id = Integer.parseInt(idtxt);
-
-			while (rset.next()) {
-				if (id == (rset.getInt(1))) {
-
-					System.err.println("Este ID ya existe, por favor introduzca otro\n");
-
-					mControlador.InsertarBBDD();
-				}
-
-			}
-			System.out.println("Nombre del Videojuego: ");
-			String nametxt = scanner.nextLine();
-			System.out.println("Plataforma (DS, GBA, N64): ");
-			String plataformatxt = scanner.nextLine();
-			System.out.println("Fecha de Lanzamiento: ");
-			String fechatxt = scanner.nextLine();
-			System.out.println("Desarrollador: ");
-			String desarrolladortxt = scanner.nextLine();
-			Videojuego mVideojuego = new Videojuego(nametxt, fechatxt, desarrolladortxt, plataformatxt);
-
-			ListaVideojuegos.put(id, mVideojuego);
-
-		} catch (IOException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
-
-	public void PedirDatoPerFHB(HashMap<Integer, Personajes> listaPersonajes) {
-		// TODO Auto-generated method stub
-		Controlador mControlador = new Controlador();
-
-		try {
-			BufferedReader br = new BufferedReader(new FileReader(archivo_personajes));
-			Scanner scanner = new Scanner(System.in);
-			System.out.println("ID_Personaje: ");
-			String idtxt = scanner.nextLine();
-			int idper = Integer.parseInt(idtxt);
-			String linea;
-			while ((linea = br.readLine()) != null) {
-				if (idtxt.equals(linea.substring(4))) {
-					System.err.println("Este ID ya existe, por favor introduzca otro\n");
-
-					mControlador.Escribir_FicheroPer();
-				}
-
-			}
-			System.out.println("Nombre del Personaje: ");
-			String namePtxt = scanner.nextLine();
-
-			System.out.println("ID_Juego: ");
-			String id_juegotxt = scanner.nextLine();
-			int id_juego = Integer.parseInt(id_juegotxt);
-
-			Personajes mPersonaje = new Personajes(namePtxt, id_juego);
-
-			listaPersonajes.put(idper, mPersonaje);
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-
-		}
-	}
 
 	public void PedirDatoPerDBHB(HashMap<Integer, Personajes> listaPersonajes) {
 		// TODO Auto-generated method stub
@@ -717,4 +609,41 @@ public class Inicio {
 		}
 	}
 
+	public void PedirDatosHB(HashMap<Integer, Videojuego> ListaVideojuegos) {
+		Controlador mControlador = new Controlador();
+		HibernateManager mHM = new HibernateManager();
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("ID_Videojuego: ");
+		String idtxt = scanner.nextLine();
+		id = Integer.parseInt(idtxt);
+		SessionFactory sf = new Configuration().configure().buildSessionFactory();
+		Session s = sf.openSession();
+		s.beginTransaction();
+		Query q = s.createQuery("Select v from videojuegos v");
+		List resultado = q.list();
+		Iterator videojuegositerador = resultado.iterator();
+	
+			while (videojuegositerador.hasNext()) {
+				videojuegos vdo = (videojuegos) videojuegositerador.next();
+				
+				if (id == (vdo.getID())) {
+
+					System.err.println("Este ID ya existe, por favor introduzca otro\n");
+
+					//mControlador.();
+				}
+				vdo.setID(id);
+				
+			}
+			System.out.println("Nombre del Videojuego: ");
+			String nametxt = scanner.nextLine();
+			System.out.println("Fecha de Lanzamiento: ");
+			String fechatxt = scanner.nextLine();
+			System.out.println("Plataforma (DS, GBA, N64): ");
+			String plataformatxt = scanner.nextLine();
+			System.out.println("Desarrollador: ");
+			String desarrolladortxt = scanner.nextLine();
+			Videojuego mVideojuego = new  Videojuego(nametxt, fechatxt, plataformatxt, desarrolladortxt);
+			ListaVideojuegos.put(id, mVideojuego);
+	}
 }

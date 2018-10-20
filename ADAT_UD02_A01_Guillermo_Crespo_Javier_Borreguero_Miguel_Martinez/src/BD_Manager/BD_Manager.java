@@ -268,8 +268,8 @@ public class BD_Manager implements Intercambio {
 				Personajes mPersonaje = new Personajes(Nombre, id_juego);
 
 				ListaPersonajes.put(id1, mPersonaje);
-
 			}
+			
 			mVista.sacarPantallaPer(ListaPersonajes);
 			mControlador.Cargar_Inicio();
 		} catch (SQLException e) {

@@ -21,6 +21,7 @@ import Interface.Intercambio;
 import Modelo.videojuegos;
 import Videojuegos.Personajes;
 import Videojuegos.Videojuego;
+import Modelo.Modelo;
 import Modelo.personajes;
 import Vistas.Inicio;
 
@@ -29,6 +30,7 @@ public class HibernateManager implements Intercambio  {
 	private static String archivo_personajes = "src/Modelo/personajes.txt";
 	HashMap<Integer, Videojuego> ListaVideojuegos = new HashMap<Integer, Videojuego>();
 	HashMap<Integer, Personajes> listaPersonajes = new HashMap<Integer, Personajes>();
+	Inicio mVista = new Inicio();
 	
 		// TODO Auto-generated method stub
 		@Override
@@ -51,10 +53,10 @@ public class HibernateManager implements Intercambio  {
 				s.beginTransaction();
 				Query q = s.createQuery("Select v from videojuegos v");
 				List resultado = q.list();
-				Iterator empleadositerador = resultado.iterator();
+				Iterator videojuegositerador = resultado.iterator();
 
-				while (empleadositerador.hasNext()) {
-					videojuegos vdo = (videojuegos) empleadositerador.next();
+				while (videojuegositerador.hasNext()) {
+					videojuegos vdo = (videojuegos) videojuegositerador.next();
 					int ID = vdo.getID();
 					String Nombre = vdo.getNombre();
 					String Fecha = vdo.getFecha_Lanzamiento();
@@ -115,8 +117,8 @@ public class HibernateManager implements Intercambio  {
 				s.getTransaction().commit();
 				s.close();
 				for (Entry<Integer, Personajes> entry : listaPersonajes.entrySet()) {
-					bw.write("ID: " + entry.getKey() + "\n" + "Nombre: " + entry.getValue().getNombre_Personaje()
-							+ "videojuego: " + entry.getValue().getID_Juego());
+					bw.write("ID: " + entry.getKey() + "\n" + "Nombre: " + entry.getValue().getNombre_Personaje() + "\n"
+							+ "videojuego: " + entry.getValue().getID_Juego()+ "\n");
 				}
 				bw.close();
 				mControlador.Cargar_Inicio();
@@ -130,21 +132,127 @@ public class HibernateManager implements Intercambio  {
 
 		@Override
 		public HashMap<Integer, Videojuego> Añadir() {
-			// TODO Auto-generated method stub
-			return null;
-		}
+			videojuegos v = new videojuegos();
+			Controlador mControlador = new Controlador();
+			
+			v.getID();
+			v.getNombre();
+			v.getFecha_Lanzamiento();
+			v.getDesarrollador();
+			v.getPlataforma();
+			
+			SessionFactory sf = new Configuration().configure().buildSessionFactory();
+			Session s = sf.openSession();
+			s.beginTransaction();
+			Query q = s.createQuery("Select v from videojuegos v");
+			List resultado = q.list();
+			Iterator videojuegositerador = resultado.iterator();
+			mVista.PedirDatosHB(ListaVideojuegos);
+			v.setNombre(v.getNombre());
+			//repetir el método de arriba con los datos correspodientes y probar 
+			//la op3 de Hibernate
+			while (videojuegositerador.hasNext()) {
+				videojuegos vdo = (videojuegos) videojuegositerador.next();
+				int ID = vdo.getID();
+				String Nombre = vdo.getNombre();
+				String Fecha = vdo.getFecha_Lanzamiento();
+				String Plataforma = vdo.getPlataforma();
+				String Desarrollador = vdo.getDesarrollador();
+
+				Videojuego mVideojuego = new Videojuego(Nombre, Fecha, Desarrollador, Plataforma);
+
+				ListaVideojuegos.put(ID, mVideojuego);
+			}
+			s.save(ListaVideojuegos);
+			s.getTransaction().commit();
+			s.close();
+			return ListaVideojuegos;
+			}
+		
 
 		@Override
 		public HashMap<Integer, Videojuego> LeerTodos() {
-			// TODO Auto-generated method stub
-			return null;
+			videojuegos v = new videojuegos();
+			Controlador mControlador = new Controlador();
+			v.getID();
+			v.getNombre();
+			v.getFecha_Lanzamiento();
+			v.getDesarrollador();
+			v.getPlataforma();
+			try {
+				SessionFactory sf = new Configuration().configure().buildSessionFactory();
+				Session s = sf.openSession();
+				s.beginTransaction();
+				Query q = s.createQuery("Select v from videojuegos v");
+				List resultado = q.list();
+				Iterator videojuegositerador = resultado.iterator();
+
+				while (videojuegositerador.hasNext()) {
+					videojuegos vdo = (videojuegos) videojuegositerador.next();
+					int ID = vdo.getID();
+					String Nombre = vdo.getNombre();
+					String Fecha = vdo.getFecha_Lanzamiento();
+					String Plataforma = vdo.getPlataforma();
+					String Desarrollador = vdo.getDesarrollador();
+
+					Videojuego mVideojuego = new Videojuego(Nombre, Fecha, Desarrollador, Plataforma);
+
+					ListaVideojuegos.put(ID, mVideojuego);
+				}
+
+				s.getTransaction().commit();
+				s.close();
+
+				mVista.sacarPantalla(ListaVideojuegos);
+				mControlador.Cargar_Inicio();
+
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			return ListaVideojuegos;
 		}
 
 		@Override
 		public HashMap<Integer, Personajes> LeerTodosPer() {
-			// TODO Auto-generated method stub
-			return null;
+			Controlador mControlador = new Controlador();
+			personajes p = new personajes();
+			p.getID();
+			p.getNombre_Personaje();
+			p.getjuego();
+			try {
+				SessionFactory sf = new Configuration().configure().buildSessionFactory();
+				Session s = sf.openSession();
+				s.beginTransaction();
+				Query q = s.createQuery("Select p from personajes p");
+				List resultado = q.list();
+				Iterator personajesIterator = resultado.iterator();
+
+				while (personajesIterator.hasNext()) {
+					personajes pnj = (personajes) personajesIterator.next();
+					int ID = pnj.getID();
+					String nombre_Personaje = pnj.getNombre_Personaje();
+					int juego = pnj.getjuego();
+					Personajes mPersonajes = new Personajes(nombre_Personaje, juego);
+					listaPersonajes.put(ID, mPersonajes);
+				}
+
+
+				s.getTransaction().commit();
+				s.close();
+
+				mVista.sacarPantallaPer(listaPersonajes);
+				mControlador.Cargar_Inicio();
+
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			return listaPersonajes;
 		}
+
 
 		@Override
 		public HashMap<Integer, Personajes> AñadirPer() {

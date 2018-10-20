@@ -14,6 +14,7 @@
 		<mapping resource="Modelo/Videojuegos.hbm.xml" />
 <!-- 		<mapping resource="hibernate.cfg.xml" /> -->
  <mapping class="Modelo.videojuegos"/>
+ <mapping resource="Modelo/Personajes.hbm.xml" />
         <mapping class="Modelo.personajes"/>
 	</session-factory>
 </hibernate-configuration>
