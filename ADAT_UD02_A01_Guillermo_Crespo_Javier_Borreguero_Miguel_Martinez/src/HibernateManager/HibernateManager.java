@@ -257,5 +257,11 @@ public class HibernateManager implements Intercambio {
 
 		return listaPersonajes;
 	}
+	public HashMap<Integer, Videojuego> EliminarHB(){
+		videojuegos v  = new videojuegos();
+		
+		return ListaVideojuegos;
+		
+	}
 
 }
