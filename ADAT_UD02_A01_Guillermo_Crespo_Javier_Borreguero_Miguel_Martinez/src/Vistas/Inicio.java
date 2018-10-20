@@ -625,7 +625,7 @@ public class Inicio {
 				if (idper == (per.getID())) {
 					System.err.println("Este ID ya existe, por favor introduzca otro\n");
 					idper = 0;
-					//mControlador.InsertarPerHB();
+					mControlador.InsertarPerHB();
 					
 				}
 				per.setjuego(idper);
