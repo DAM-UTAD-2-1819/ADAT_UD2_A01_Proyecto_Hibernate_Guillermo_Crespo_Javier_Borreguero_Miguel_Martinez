@@ -11,19 +11,19 @@
 		</id>
 
 		<property name="Nombre" type="string">
-			<column name="Nombre" length="30" not-null="true" />
+			<column name="Nombre" length="30" not-null="false" />
 		</property>
 		
 		<property name="Fecha_Lanzamiento" type="string">
-			<column name="Fecha_Lanzamiento" length="30" not-null="true" />
+			<column name="Fecha_Lanzamiento" length="30" not-null="false" />
 		</property>
 		
 		<property name="Desarrollador" type="string">
-			<column name="Desarrollador" length="30" not-null="true" />
+			<column name="Desarrollador" length="30" not-null="false" />
 		</property>
 		
 		<property name="Plataforma" type="string">
-			<column name="Plataforma" length="30" not-null="true" />
+			<column name="Plataforma" length="30" not-null="false" />
 		</property>
 	</class>
 

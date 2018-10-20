@@ -44,7 +44,7 @@ public class Inicio {
 	int id = 0;
 	private String archivo_videojuegos = "src/Modelo/videojuegos.txt";
 	private String archivo_personajes = "src/Modelo/personajes.txt";
-
+	
 	public void CargarMenuPrincipal() throws SQLException, IOException {
 		String menu = "¿En que modo quieres trabajar?\n" + "1:Normal\n" + "2:Hibernate";
 		System.out.println(menu);
@@ -612,17 +612,13 @@ public class Inicio {
 	public void PedirDatosHB(HashMap<Integer, Videojuego> ListaVideojuegos) {
 		Controlador mControlador = new Controlador();
 		HibernateManager mHM = new HibernateManager();
+		Query q = mHM.s.createQuery("Select v from videojuegos v");
+		List resultado = q.list();
+		Iterator videojuegositerador = resultado.iterator();
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("ID_Videojuego: ");
 		String idtxt = scanner.nextLine();
 		id = Integer.parseInt(idtxt);
-		SessionFactory sf = new Configuration().configure().buildSessionFactory();
-		Session s = sf.openSession();
-		s.beginTransaction();
-		Query q = s.createQuery("Select v from videojuegos v");
-		List resultado = q.list();
-		Iterator videojuegositerador = resultado.iterator();
-	
 			while (videojuegositerador.hasNext()) {
 				videojuegos vdo = (videojuegos) videojuegositerador.next();
 				
@@ -630,7 +626,7 @@ public class Inicio {
 
 					System.err.println("Este ID ya existe, por favor introduzca otro\n");
 
-					//mControlador.();
+					mControlador.InsertarHB();
 				}
 				vdo.setID(id);
 				

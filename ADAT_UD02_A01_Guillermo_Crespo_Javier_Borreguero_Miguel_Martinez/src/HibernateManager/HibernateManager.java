@@ -31,6 +31,8 @@ public class HibernateManager implements Intercambio  {
 	HashMap<Integer, Videojuego> ListaVideojuegos = new HashMap<Integer, Videojuego>();
 	HashMap<Integer, Personajes> listaPersonajes = new HashMap<Integer, Personajes>();
 	Inicio mVista = new Inicio();
+	public SessionFactory sf = new Configuration().configure().buildSessionFactory();
+	public Session s = sf.openSession();
 	
 		// TODO Auto-generated method stub
 		@Override
@@ -48,8 +50,7 @@ public class HibernateManager implements Intercambio  {
 			try {
 				BufferedWriter bw = new BufferedWriter(new FileWriter(archivo_videojuegos, false));
 
-				SessionFactory sf = new Configuration().configure().buildSessionFactory();
-				Session s = sf.openSession();
+				
 				s.beginTransaction();
 				Query q = s.createQuery("Select v from videojuegos v");
 				List resultado = q.list();
@@ -99,8 +100,7 @@ public class HibernateManager implements Intercambio  {
 			p.getjuego();
 			try {
 				BufferedWriter bw = new BufferedWriter(new FileWriter(archivo_personajes, false));
-				SessionFactory sf = new Configuration().configure().buildSessionFactory();
-				Session s = sf.openSession();
+				
 				s.beginTransaction();
 				Query q = s.createQuery("Select p from personajes p");
 				List resultado2 = q.list();
@@ -134,36 +134,24 @@ public class HibernateManager implements Intercambio  {
 		public HashMap<Integer, Videojuego> Añadir() {
 			videojuegos v = new videojuegos();
 			Controlador mControlador = new Controlador();
-			
+	
+			s.beginTransaction();
+			mVista.PedirDatosHB(ListaVideojuegos);
+			for (Entry<Integer, Videojuego> entry : ListaVideojuegos.entrySet()) {
+				
+				v.setID(entry.getKey());  
+				v.setNombre(entry.getValue().getNombre());
+				v.setFecha_Lanzamiento(entry.getValue().getFecha_Lanzamiento());
+				v.setPlataforma(entry.getValue().getPlataforma());
+				v.setDesarrollador(entry.getValue().getDesarrollador());
+			}
 			v.getID();
 			v.getNombre();
 			v.getFecha_Lanzamiento();
-			v.getDesarrollador();
 			v.getPlataforma();
+			v.getDesarrollador();	
 			
-			SessionFactory sf = new Configuration().configure().buildSessionFactory();
-			Session s = sf.openSession();
-			s.beginTransaction();
-			Query q = s.createQuery("Select v from videojuegos v");
-			List resultado = q.list();
-			Iterator videojuegositerador = resultado.iterator();
-			mVista.PedirDatosHB(ListaVideojuegos);
-			v.setNombre(v.getNombre());
-			//repetir el método de arriba con los datos correspodientes y probar 
-			//la op3 de Hibernate
-			while (videojuegositerador.hasNext()) {
-				videojuegos vdo = (videojuegos) videojuegositerador.next();
-				int ID = vdo.getID();
-				String Nombre = vdo.getNombre();
-				String Fecha = vdo.getFecha_Lanzamiento();
-				String Plataforma = vdo.getPlataforma();
-				String Desarrollador = vdo.getDesarrollador();
-
-				Videojuego mVideojuego = new Videojuego(Nombre, Fecha, Desarrollador, Plataforma);
-
-				ListaVideojuegos.put(ID, mVideojuego);
-			}
-			s.save(ListaVideojuegos);
+			s.save(v);
 			s.getTransaction().commit();
 			s.close();
 			return ListaVideojuegos;
@@ -180,8 +168,7 @@ public class HibernateManager implements Intercambio  {
 			v.getDesarrollador();
 			v.getPlataforma();
 			try {
-				SessionFactory sf = new Configuration().configure().buildSessionFactory();
-				Session s = sf.openSession();
+				
 				s.beginTransaction();
 				Query q = s.createQuery("Select v from videojuegos v");
 				List resultado = q.list();
@@ -222,8 +209,7 @@ public class HibernateManager implements Intercambio  {
 			p.getNombre_Personaje();
 			p.getjuego();
 			try {
-				SessionFactory sf = new Configuration().configure().buildSessionFactory();
-				Session s = sf.openSession();
+				
 				s.beginTransaction();
 				Query q = s.createQuery("Select p from personajes p");
 				List resultado = q.list();
