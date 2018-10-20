@@ -153,6 +153,7 @@ public class HibernateManager implements Intercambio {
 		s.save(v);
 		s.getTransaction().commit();
 		s.close();
+		mControlador.Cargar_Inicio();
 		return ListaVideojuegos;
 	}
 
@@ -173,6 +174,7 @@ public class HibernateManager implements Intercambio {
 		s.save(p);
 		s.getTransaction().commit();
 		s.close();
+		mControlador.Cargar_Inicio();
 		return listaPersonajes;
 	}
 
