@@ -161,7 +161,7 @@ public class HibernateManager implements Intercambio {
 		personajes p = new personajes();
 		Controlador mControlador = new Controlador();
 		s.beginTransaction();
-		//mVista.PedirDatoPerHB(listaPersonajes);
+		mVista.PedirDatosPerHB(listaPersonajes);
 		for (Entry<Integer, Personajes> entry: listaPersonajes.entrySet()) {
 			p.setID(entry.getKey());
 			p.setNombre_Personaje(entry.getValue().getNombre_Personaje());

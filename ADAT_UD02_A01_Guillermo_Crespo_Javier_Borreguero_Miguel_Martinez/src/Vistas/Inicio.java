@@ -473,7 +473,7 @@ public class Inicio {
 				break;
 			case 2:
 				// Añadir Método Hibernate
-				// mControlador.InsertarBBDDPer();
+				mControlador.InsertarPerHB();
 			default:
 				break;
 			}
