@@ -1,13 +1,14 @@
--- phpMyAdmin SQL Dump
--- version 4.7.4
+﻿-- phpMyAdmin SQL Dump
+-- version 4.7.9
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-10-2018 a las 13:09:42
--- Versión del servidor: 10.1.29-MariaDB
--- Versión de PHP: 7.2.0
+-- Tiempo de generación: 21-10-2018 a las 21:01:51
+-- Versión del servidor: 10.1.31-MariaDB
+-- Versión de PHP: 7.2.3
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+
+CREATE DATABASE `videojuegos_hibernate`; SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
@@ -19,9 +20,8 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `videojuegos`
+-- Base de datos: `videojuegos_hibernate`
 --
-CREATE DATABASE `videojuegos_hibernate`;
 
 DELIMITER $$
 --
@@ -30,6 +30,14 @@ DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `add_key` ()  NO SQL
 ALTER TABLE personajes
   ADD CONSTRAINT personajes_ibfk_1 FOREIGN KEY (ID_Juego) REFERENCES videojuegos (ID)$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `delete_videojuegos` (IN `name` VARCHAR(255))  NO SQL
+DELETE personajes FROM personajes INNER JOIN videojuegos ON personajes.ID_Juego = videojuegos.ID 
+WHERE videojuegos.Nombre = name$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `delete_videojuegos2` (IN `name` VARCHAR(255))  NO SQL
+DELETE FROM `videojuegos`
+where videojuegos.Nombre = name$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `eliminar_key` ()  NO SQL
 ALTER TABLE personajes
@@ -44,7 +52,7 @@ DELIMITER ;
 --
 
 CREATE TABLE `personajes` (
-  `ID` int(11) NOT NULL,
+  `ID_PER` int(11) NOT NULL,
   `Nombre_Personaje` varchar(140) NOT NULL,
   `ID_Juego` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -53,10 +61,8 @@ CREATE TABLE `personajes` (
 -- Volcado de datos para la tabla `personajes`
 --
 
-INSERT INTO `personajes` (`ID`, `Nombre_Personaje`, `ID_Juego`) VALUES
-(1, 'Mario', 0),
-(2, 'Nathan Drake', 1),
-(3, 'Princesa Peach', 0);
+INSERT INTO `personajes` (`ID_PER`, `Nombre_Personaje`, `ID_Juego`) VALUES
+(0, 'Super', 0);
 
 -- --------------------------------------------------------
 
@@ -77,8 +83,7 @@ CREATE TABLE `videojuegos` (
 --
 
 INSERT INTO `videojuegos` (`ID`, `Nombre`, `Fecha_Lanzamiento`, `Desarrollador`, `Plataforma`) VALUES
-(0, 'Super', 'ayer', 'Nintendo', 'DS'),
-(1, 'Uncharted', '20/11/2007', 'Naughty Dog', 'PS3');
+(0, 'Super', 'ayer', 'Nintendo', 'DS');
 
 --
 -- Índices para tablas volcadas
