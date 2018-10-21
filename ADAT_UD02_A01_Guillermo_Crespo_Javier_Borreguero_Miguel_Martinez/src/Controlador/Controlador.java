@@ -102,6 +102,10 @@ public class Controlador {
 		HibernateManager mHM = new HibernateManager();
 		mHM.LeerTodosPer();
 	}
+	public void ImprimirPersonajesHB() {
+		HibernateManager mHM = new HibernateManager();
+		mHM.LeerTodosPerAux();
+	}
 
 	public void InsertarHB() {
 		HibernateManager mHM = new HibernateManager();
@@ -128,6 +132,10 @@ public class Controlador {
 		mHM.Fichero2HB();
 	}
 
+	public void Fichero2HBPer() {
+		HibernateManager mHM = new HibernateManager();
+		mHM.Fichero2HBPer();
+	}
 	// Llamadas a la Vista
 	public void PedirDatosBD(HashMap<Integer, Videojuego> ListaVideojuegos) {
 		Inicio mVista = new Inicio();

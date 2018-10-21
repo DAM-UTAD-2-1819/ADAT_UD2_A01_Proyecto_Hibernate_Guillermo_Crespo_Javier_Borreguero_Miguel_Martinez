@@ -35,7 +35,7 @@ public class HibernateManager implements Intercambio {
 	private static String archivo_personajes = "src/Modelo/personajes.txt";
 	HashMap<Integer, Videojuego> ListaVideojuegos = new HashMap<Integer, Videojuego>();
 	HashMap<Integer, Personajes> listaPersonajes = new HashMap<Integer, Personajes>();
-	Inicio mVista = new Inicio();
+
 	public SessionFactory sf = new Configuration().configure().buildSessionFactory();
 	public Session s = sf.openSession();
 
@@ -99,7 +99,7 @@ public class HibernateManager implements Intercambio {
 		// Copiar la tabla personajes de BBDD en el fichero
 		personajes p = new personajes();
 		Controlador mControlador = new Controlador();
-		p.getID();
+		p.getID_per();
 		p.getNombre_Personaje();
 		p.getjuego();
 		try {
@@ -111,7 +111,7 @@ public class HibernateManager implements Intercambio {
 			Iterator personajesIterator = resultado2.iterator();
 			while (personajesIterator.hasNext()) {
 				personajes pnj = (personajes) personajesIterator.next();
-				int ID = pnj.getID();
+				int ID = pnj.getID_per();
 				String nombre_Personaje = pnj.getNombre_Personaje();
 				int juego = pnj.getjuego();
 				Personajes mPersonajes = new Personajes(nombre_Personaje, juego);
@@ -169,11 +169,11 @@ public class HibernateManager implements Intercambio {
 		s.beginTransaction();
 		mControlador.PedirDatosPerHB(listaPersonajes);
 		for (Entry<Integer, Personajes> entry: listaPersonajes.entrySet()) {
-			p.setID(entry.getKey());
+			p.setID_per(entry.getKey());
 			p.setNombre_Personaje(entry.getValue().getNombre_Personaje());
 			p.setjuego(entry.getValue().getID_Juego());
 		}
-		p.getID();
+		p.getID_per();
 		p.getNombre_Personaje();
 		p.getjuego();
 		s.save(p);
@@ -256,7 +256,7 @@ public class HibernateManager implements Intercambio {
 			s.getTransaction().commit();
 			s.close();
 
-			mVista.sacarPantalla(ListaVideojuegos);
+			mControlador.MostrarDatos(ListaVideojuegos);
 			mControlador.Cargar_Inicio();
 
 		} catch (Exception e) {
@@ -267,11 +267,10 @@ public class HibernateManager implements Intercambio {
 		return ListaVideojuegos;
 	}
 
-	@Override
-	public HashMap<Integer, Personajes> LeerTodosPer() {
+	public HashMap<Integer, Personajes> LeerTodosPerAux() {
 		Controlador mControlador = new Controlador();
 		personajes p = new personajes();
-		p.getID();
+		p.getID_per();
 		p.getNombre_Personaje();
 		p.getjuego();
 		try {
@@ -283,7 +282,42 @@ public class HibernateManager implements Intercambio {
 
 			while (personajesIterator.hasNext()) {
 				personajes pnj = (personajes) personajesIterator.next();
-				int ID = pnj.getID();
+				int ID = pnj.getID_per();
+				String nombre_Personaje = pnj.getNombre_Personaje();
+				int juego = pnj.getjuego();
+				Personajes mPersonajes = new Personajes(nombre_Personaje, juego);
+				listaPersonajes.put(ID, mPersonajes);
+			}
+
+			s.getTransaction().commit();
+			s.close();
+
+			mControlador.MostrarDatosPer(listaPersonajes);
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return listaPersonajes;
+	}
+	@Override
+	public HashMap<Integer, Personajes> LeerTodosPer() {
+		Controlador mControlador = new Controlador();
+		personajes p = new personajes();
+		p.getID_per();
+		p.getNombre_Personaje();
+		p.getjuego();
+		try {
+
+			s.beginTransaction();
+			Query q = s.createQuery("Select p from personajes p");
+			List resultado = q.list();
+			Iterator personajesIterator = resultado.iterator();
+
+			while (personajesIterator.hasNext()) {
+				personajes pnj = (personajes) personajesIterator.next();
+				int ID = pnj.getID_per();
 				String nombre_Personaje = pnj.getNombre_Personaje();
 				int juego = pnj.getjuego();
 				Personajes mPersonajes = new Personajes(nombre_Personaje, juego);
@@ -334,7 +368,7 @@ public class HibernateManager implements Intercambio {
 	public HashMap<Integer, Personajes> EliminarPerHB(){
 		personajes p  = new personajes();
 		Controlador mControlador = new Controlador();
-		mControlador.EliminarDatosHB(ListaVideojuegos);
+		mControlador.EliminarDatosPerHB(listaPersonajes);
 		
 		for (Entry<Integer, Personajes> entry : listaPersonajes.entrySet()) {
 
@@ -378,12 +412,6 @@ public class HibernateManager implements Intercambio {
 	
 
 		s.beginTransaction();
-		String delpers="DELETE FROM personajes";
-		Query q1 = s.createSQLQuery(delpers);
-		String deltabla1 = "DELETE FROM videojuegos";
-		Query q2 = s.createSQLQuery(deltabla1);
-		q1.executeUpdate();
-		q2.executeUpdate();
 
 		for (Entry<Integer, Videojuego> entry : ListaVideojuegos.entrySet()) {
 
@@ -392,21 +420,26 @@ public class HibernateManager implements Intercambio {
 			v.setFecha_Lanzamiento(entry.getValue().getFecha_Lanzamiento());
 			v.setPlataforma(entry.getValue().getPlataforma());
 			v.setDesarrollador(entry.getValue().getDesarrollador());
+		
+			
+		
+			
 		}
+		
+		
+		
 		v.getID();
 		v.getNombre();
 		v.getFecha_Lanzamiento();
 		v.getPlataforma();
 		v.getDesarrollador();
 
-		s.save(v);
-		
-		//s.getTransaction().commit();
-		
-
+		s.update(v);
+		s.getTransaction().commit();
 		br.close();
+		s.close();
 
-		Fichero2HBPer();
+		mControlador.Fichero2HBPer();
 
 	} catch (IOException e) {
 		// TODO Auto-generated catch block
@@ -436,19 +469,26 @@ public class HibernateManager implements Intercambio {
 				Personajes mPersonaje = new Personajes(nombre_Personaje, id_Juego);
 				listaPersonajes.put(id, mPersonaje);
 			}
-			//s.beginTransaction();
+			
 
 
 			for (Entry<Integer, Personajes> entry: listaPersonajes.entrySet()) {
-				p.setID(entry.getKey());
+				p.setID_per(entry.getKey());
 				p.setNombre_Personaje(entry.getValue().getNombre_Personaje());
 				p.setjuego(entry.getValue().getID_Juego());
+				
+				
+				
 			}
-			p.getID();
+			p.getID_per();
 			p.getNombre_Personaje();
 			p.getjuego();
-			s.save(p);
+			s.beginTransaction();
+			s.update(p);
 			s.getTransaction().commit();
+			
+			
+			
 			s.close();
 
 			brf.close();

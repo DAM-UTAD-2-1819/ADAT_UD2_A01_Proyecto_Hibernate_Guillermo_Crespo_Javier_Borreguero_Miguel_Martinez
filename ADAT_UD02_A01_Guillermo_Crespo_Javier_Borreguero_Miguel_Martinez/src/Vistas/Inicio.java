@@ -28,6 +28,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.sql.MckoiCaseFragment;
 
 import com.mysql.jdbc.util.ResultSetUtil;
 
@@ -572,7 +573,7 @@ public class Inicio {
 			while (personajesiterador.hasNext()) {
 				personajes per = (personajes) personajesiterador.next();
 
-				if (idper == (per.getID())) {
+				if (idper == (per.getID_per())) {
 					System.err.println("Este ID ya existe, por favor introduzca otro\n");
 					idper = 0;
 					mControlador.InsertarPerHB();
@@ -617,6 +618,8 @@ public class Inicio {
 	}
 	public void EliminarDatosHB (HashMap<Integer, Videojuego> ListaVideojuegos ) {
 		Scanner scanner = new Scanner(System.in);
+		Controlador mControlador = new Controlador();
+		mControlador.ImprimirVideojuegosHB();
 		System.out.println("Nombre del Videojuego que quiere borrar (se borrarán sus personajes): ");
 		String nametxt = scanner.nextLine();
 		String Fecha="";
@@ -629,8 +632,10 @@ public class Inicio {
 		
 	}
 	public void EliminarDatosPerHB (HashMap<Integer, Personajes> listaPersonajes ) {
-		Scanner scanner = new Scanner(System.in);
+		Controlador mControlador = new Controlador();
+		mControlador.ImprimirPersonajesHB();
 		System.out.println("Nombre del personaje que desea borar: ");
+		Scanner scanner = new Scanner(System.in);
 		String nametxt = scanner.nextLine();
 		
 		int id=0;

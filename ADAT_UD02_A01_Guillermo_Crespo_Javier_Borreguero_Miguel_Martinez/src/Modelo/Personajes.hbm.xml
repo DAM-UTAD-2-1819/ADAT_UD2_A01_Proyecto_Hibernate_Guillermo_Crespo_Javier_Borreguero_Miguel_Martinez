@@ -5,18 +5,19 @@
 <hibernate-mapping>
 
 	<class name="Modelo.personajes" table="personajes">
-		<id name="ID" type="int">
-			<column name="ID" />
+		<id name="ID_per" type="int">
+			<column name="ID_PER" />
+			<generator class="increment" />
 		</id>
 
 		<property name="Nombre_Personaje" type="string">
-			<column name="Nombre_Personaje" length="30" not-null="true" />
+			<column name="Nombre_Personaje" length="255" not-null="true" />
 		</property>
 		
 		<property name="juego" type="int">
 			<column name="ID_Juego"/>
 		</property>
-
+	
 	</class>
 
 </hibernate-mapping>

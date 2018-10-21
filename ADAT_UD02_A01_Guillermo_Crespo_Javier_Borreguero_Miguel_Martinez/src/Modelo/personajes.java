@@ -4,7 +4,7 @@ package Modelo;
 
 public class personajes {
 	
-	private int ID;
+	private int ID_per;
 	private String Nombre_Personaje;
 	private int juego;
 	//Constructor de la tabla personajes
@@ -13,11 +13,11 @@ public class personajes {
 	}
 	
 	//getters y setters de los atributos
-	public int getID() {
-		return ID;
+	public int getID_per() {
+		return ID_per;
 	}
-	public void setID(int ID) {
-		this.ID = ID;
+	public void setID_per(int ID_per) {
+		this.ID_per = ID_per;
 	}
 	public String getNombre_Personaje() {
 		return Nombre_Personaje;
