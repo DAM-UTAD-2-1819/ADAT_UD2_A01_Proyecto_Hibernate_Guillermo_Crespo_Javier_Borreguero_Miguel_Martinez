@@ -7,7 +7,6 @@
 	<class name="Modelo.personajes" table="personajes">
 		<id name="ID_per" type="int">
 			<column name="ID_PER" />
-			<generator class="increment" />
 		</id>
 
 		<property name="Nombre_Personaje" type="string">

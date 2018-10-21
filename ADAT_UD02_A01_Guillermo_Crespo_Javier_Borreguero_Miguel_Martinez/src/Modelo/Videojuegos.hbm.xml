@@ -7,7 +7,6 @@
 	<class name="Modelo.videojuegos" table="videojuegos">
 		<id name="ID" type="int">
 			<column name="ID" not-null="true" />
-			<generator class="increment" />
 		</id>
 
 		<property name="Nombre" type="string">
