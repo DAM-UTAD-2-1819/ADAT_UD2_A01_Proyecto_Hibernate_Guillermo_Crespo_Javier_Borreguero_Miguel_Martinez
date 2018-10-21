@@ -410,7 +410,6 @@ public class Inicio {
 		System.out.println("3: Leer BBDD");
 		System.out.println("4: Añadir BBDD");
 		System.out.println("5: Eliminar BBDD");
-		System.out.println("6: Actualizar BBDD");
 
 		Scanner opt = new Scanner(System.in);
 		System.out.print("Elija una opción:  ");
@@ -438,8 +437,8 @@ public class Inicio {
 			break;
 
 		case 2:
-			// Añadir Método Hibernate
-			// mControlador.TXT2BBDD();
+			
+			mControlador.TXT2BBDDHB();
 
 			break;
 		case 3:
@@ -468,11 +467,11 @@ public class Inicio {
 			int eleccion4 = opt4.nextInt();
 			switch (eleccion4) {
 			case 1:
-				// Añadir Método Hibernate
+				
 				mControlador.InsertarHB();
 				break;
 			case 2:
-				// Añadir Método Hibernate
+			
 				mControlador.InsertarPerHB();
 			default:
 				break;
@@ -487,34 +486,15 @@ public class Inicio {
 			int eleccion5 = opt5.nextInt();
 			switch (eleccion5) {
 			case 1:
-				// Añadir Método Hibernate
-				// mControlador.InsertarBBDD();
+				
+				 mControlador.EliminarHB();
 				break;
 			case 2:
-				// Añadir Método Hibernate
-				// mControlador.InsertarBBDDPer();
+				
+				 mControlador.EliminarPerHB();
 			default:
 				break;
 			}
-		case 6:
-			System.out.println("   1: Actualizar un Videojuego");
-			System.out.println("   2: Actualizar un Personaje");
-			Scanner opt6 = new Scanner(System.in);
-			System.out.print("     Elija una opción:  ");
-			int eleccion6 = opt6.nextInt();
-			switch (eleccion6) {
-			case 1:
-				// Añadir Método Hibernate
-				// mControlador.InsertarBBDD();
-				break;
-			case 2:
-				// Añadir Método Hibernate
-				// mControlador.InsertarBBDDPer();
-			default:
-				break;
-			}
-
-			break;
 		default:
 			System.out.println("Dato mal introducido");
 			break;
@@ -603,7 +583,7 @@ public class Inicio {
 			System.out.println("Nombre del Personaje: ");
 			String namePtxt = scanner.nextLine();
 
-			mControlador.ImprimirVideojuegos();
+			mControlador.ImprimirVideojuegosHB();
 			System.out.println("----Elige el juego al que pertenece este Personaje");
 			Scanner scanner1 = new Scanner(System.in);
 			System.out.println("ID_Juego: ");
@@ -635,16 +615,28 @@ public class Inicio {
 		}
 
 	}
-	public void EliminarDatosHB (HashMap<Integer, Videojuego> ListaVideojuegos) {
-		
-		HibernateManager mHM = new HibernateManager();
-//		Query q = mHM.s.createQuery("Delete v from videojuegos v");;
-//		List resultado = q.list();
-//		Iterator videojuegositerador = resultado.iterator();
+	public void EliminarDatosHB (HashMap<Integer, Videojuego> ListaVideojuegos ) {
 		Scanner scanner = new Scanner(System.in);
-		System.out.println("Nombre del Videojuego que quiere borrar: ");
+		System.out.println("Nombre del Videojuego que quiere borrar (se borrarán sus personajes): ");
 		String nametxt = scanner.nextLine();
-		mHM.EliminarHB(nametxt);
+		String Fecha="";
+		int id=0;
+		String Desarrollador="";
+		String Plataforma="";
+		Videojuego mVideojuego = new Videojuego(nametxt, Fecha, Desarrollador, Plataforma);
+		ListaVideojuegos.put(id, mVideojuego);
+		
+		
+	}
+	public void EliminarDatosPerHB (HashMap<Integer, Personajes> listaPersonajes ) {
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Nombre del personaje que desea borar: ");
+		String nametxt = scanner.nextLine();
+		
+		int id=0;
+		
+		Personajes mPersonaje = new Personajes(nametxt, id);
+		listaPersonajes.put(id, mPersonaje);
 		
 		
 	}

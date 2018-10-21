@@ -1,6 +1,8 @@
 package HibernateManager;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.PreparedStatement;
@@ -11,10 +13,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 
+import javax.persistence.Entity;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.procedure.ProcedureCall;
 
 import Controlador.Controlador;
 import Interface.Intercambio;
@@ -117,7 +122,7 @@ public class HibernateManager implements Intercambio {
 			s.close();
 			for (Entry<Integer, Personajes> entry : listaPersonajes.entrySet()) {
 				bw.write("ID: " + entry.getKey() + "\n" + "Nombre: " + entry.getValue().getNombre_Personaje() + "\n"
-						+ "videojuego: " + entry.getValue().getID_Juego() + "\n");
+						+ "id_juego: " + entry.getValue().getID_Juego() + "\n");
 			}
 			bw.close();
 			mControlador.Cargar_Inicio();
@@ -135,7 +140,7 @@ public class HibernateManager implements Intercambio {
 		Controlador mControlador = new Controlador();
 
 		s.beginTransaction();
-		mVista.PedirDatosHB(ListaVideojuegos);
+		mControlador.PedirDatosHB();
 		for (Entry<Integer, Videojuego> entry : ListaVideojuegos.entrySet()) {
 
 			v.setID(entry.getKey());
@@ -178,6 +183,47 @@ public class HibernateManager implements Intercambio {
 		return listaPersonajes;
 	}
 
+	public HashMap<Integer, Videojuego> LeerTodosAux() {
+		videojuegos v = new videojuegos();
+		Controlador mControlador = new Controlador();
+		v.getID();
+		v.getNombre();
+		v.getFecha_Lanzamiento();
+		v.getDesarrollador();
+		v.getPlataforma();
+		try {
+
+			s.beginTransaction();
+			Query q = s.createQuery("Select v from videojuegos v");
+			List resultado = q.list();
+			Iterator videojuegositerador = resultado.iterator();
+
+			while (videojuegositerador.hasNext()) {
+				videojuegos vdo = (videojuegos) videojuegositerador.next();
+				int ID = vdo.getID();
+				String Nombre = vdo.getNombre();
+				String Fecha = vdo.getFecha_Lanzamiento();
+				String Plataforma = vdo.getPlataforma();
+				String Desarrollador = vdo.getDesarrollador();
+
+				Videojuego mVideojuego = new Videojuego(Nombre, Fecha, Desarrollador, Plataforma);
+
+				ListaVideojuegos.put(ID, mVideojuego);
+			}
+
+			s.getTransaction().commit();
+			s.close();
+
+			mVista.sacarPantalla(ListaVideojuegos);
+			
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return ListaVideojuegos;
+	}
 	@Override
 	public HashMap<Integer, Videojuego> LeerTodos() {
 		videojuegos v = new videojuegos();
@@ -259,9 +305,159 @@ public class HibernateManager implements Intercambio {
 	}
 	public HashMap<Integer, Videojuego> EliminarHB(){
 		videojuegos v  = new videojuegos();
+		mVista.EliminarDatosHB(ListaVideojuegos);
 		
+		for (Entry<Integer, Videojuego> entry : ListaVideojuegos.entrySet()) {
+
+			v.setNombre(entry.getValue().getNombre());
+		
+		}
+		String name=v.getNombre();
+		//escribir llamada con parametro a procedure
+		
+		Query q1 = s.createSQLQuery("CALL delete_videojuegos(:name1)");
+		q1.setParameter("name1", name);
+		Query q2 = s.createSQLQuery("CALL delete_videojuegos2(:name)");
+		q2.setParameter("name", name);
+		s.beginTransaction();
+		q1.executeUpdate();
+		q2.executeUpdate();
+		s.getTransaction().commit();
+		s.close();
+		
+		Controlador mControlador = new Controlador();
+		mControlador.Cargar_Inicio();
 		return ListaVideojuegos;
 		
+	}
+	public HashMap<Integer, Personajes> EliminarPerHB(){
+		personajes p  = new personajes();
+		mVista.EliminarDatosPerHB(listaPersonajes);
+		
+		for (Entry<Integer, Personajes> entry : listaPersonajes.entrySet()) {
+
+			p.setNombre_Personaje(entry.getValue().getNombre_Personaje());
+		
+		}
+		String name=p.getNombre_Personaje();
+		//escribir llamada con parametro a procedure
+		
+		Query q1 = s.createSQLQuery("DELETE FROM personajes where Nombre_Personaje = :name1");
+		q1.setParameter("name1", name);
+		s.beginTransaction();
+		q1.executeUpdate();
+		s.getTransaction().commit();
+		s.close();
+		
+		Controlador mControlador = new Controlador();
+		mControlador.Cargar_Inicio();
+		return listaPersonajes;
+		
+	}	
+	public HashMap<Integer, Videojuego> Fichero2HB(){
+	Controlador mControlador = new Controlador();
+	videojuegos v = new videojuegos();
+	try {
+
+		BufferedReader br = new BufferedReader(new FileReader(archivo_videojuegos));
+
+		String linea;
+		while ((linea = br.readLine()) != null) {
+			String idtxt = linea.substring(4);
+			int id = Integer.parseInt(idtxt);
+			String nametxt = br.readLine().substring(8);
+			String fechatxt = br.readLine().substring(22);
+			String desarrolladortxt = br.readLine().substring(15);
+			String plataformatxt = br.readLine().substring(12);
+
+			Videojuego mVideojuego = new Videojuego(nametxt, fechatxt, desarrolladortxt, plataformatxt);
+			ListaVideojuegos.put(id, mVideojuego);
+		}
+	
+
+		s.beginTransaction();
+		String delpers="DELETE FROM personajes";
+		Query q1 = s.createSQLQuery(delpers);
+		String deltabla1 = "DELETE FROM videojuegos";
+		Query q2 = s.createSQLQuery(deltabla1);
+		q1.executeUpdate();
+		q2.executeUpdate();
+
+		for (Entry<Integer, Videojuego> entry : ListaVideojuegos.entrySet()) {
+
+			v.setID(entry.getKey());
+			v.setNombre(entry.getValue().getNombre());
+			v.setFecha_Lanzamiento(entry.getValue().getFecha_Lanzamiento());
+			v.setPlataforma(entry.getValue().getPlataforma());
+			v.setDesarrollador(entry.getValue().getDesarrollador());
+		}
+		v.getID();
+		v.getNombre();
+		v.getFecha_Lanzamiento();
+		v.getPlataforma();
+		v.getDesarrollador();
+
+		s.save(v);
+		
+		s.getTransaction().commit();
+		
+
+		br.close();
+
+		Fichero2HBPer();
+
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	mControlador.Cargar_Inicio();
+
+	return ListaVideojuegos;
+
+}
+	public HashMap<Integer, Personajes> Fichero2HBPer() {
+		personajes p = new personajes();
+		Controlador mControlador = new Controlador();
+
+		try {
+
+			BufferedReader brf = new BufferedReader(new FileReader(archivo_personajes));
+
+			String linea2;
+			while ((linea2 = brf.readLine()) != null) {
+				String idtxt = linea2.substring(4);
+				int id = Integer.parseInt(idtxt);
+				String nombre_Personaje = brf.readLine().substring(8);
+				String id_Juegotxt = brf.readLine().substring(10);
+				int id_Juego = Integer.parseInt(id_Juegotxt);
+
+				Personajes mPersonaje = new Personajes(nombre_Personaje, id_Juego);
+				listaPersonajes.put(id, mPersonaje);
+			}
+			s.beginTransaction();
+
+
+			for (Entry<Integer, Personajes> entry: listaPersonajes.entrySet()) {
+				p.setID(entry.getKey());
+				p.setNombre_Personaje(entry.getValue().getNombre_Personaje());
+				p.setjuego(entry.getValue().getID_Juego());
+			}
+			p.getID();
+			p.getNombre_Personaje();
+			p.getjuego();
+			s.save(p);
+			s.getTransaction().commit();
+			s.close();
+
+			brf.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		mControlador.Cargar_Inicio();
+
+		return listaPersonajes;
+
 	}
 
 }

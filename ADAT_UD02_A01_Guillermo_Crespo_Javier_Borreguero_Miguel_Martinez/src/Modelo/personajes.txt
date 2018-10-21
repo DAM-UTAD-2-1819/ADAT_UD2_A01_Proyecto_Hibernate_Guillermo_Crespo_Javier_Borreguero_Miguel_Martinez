@@ -1,9 +1,9 @@
 ID: 1
 Nombre: Mario
-videojuego: 0
+id_juego: 0
 ID: 2
 Nombre: Nathan Drake
-videojuego: 1
+id_juego: 1
 ID: 3
 Nombre: Princesa Peach
-videojuego: 0
+id_juego: 0

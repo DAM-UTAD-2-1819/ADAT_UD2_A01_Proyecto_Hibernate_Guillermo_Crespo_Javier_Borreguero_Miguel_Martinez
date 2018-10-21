@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 
 import BD_Manager.BD_Manager;
+import Videojuegos.Personajes;
 import Videojuegos.Videojuego;
 import Vistas.*;
 import Interface.Intercambio;
@@ -16,6 +17,8 @@ public class Controlador {
 	FileManager mFM = new FileManager();
 	HibernateManager mHM = new HibernateManager();
 	Inicio mVista = new Inicio();
+	HashMap<Integer, Videojuego> ListaVideojuegos = new HashMap<Integer, Videojuego>();
+	HashMap<Integer, Personajes> listaPersonajes = new HashMap<Integer, Personajes>();
 	
 	//Llamadas a BD_Manager
 	public void ImprimirDatos() {
@@ -69,6 +72,9 @@ public class Controlador {
 	public void ImprimirDatosHB() {
 		mHM.LeerTodos();
 	}
+	public void ImprimirVideojuegosHB() {
+		mHM.LeerTodosAux();
+	}
 	
 	public void ImprimirDatosPerHB() {
 		mHM.LeerTodosPer();
@@ -79,9 +85,23 @@ public class Controlador {
 	public void InsertarPerHB() {
 		mHM.AñadirPer();
 	}
+	public void EliminarHB() {
+		mHM.EliminarHB();
+	}
+	public void EliminarPerHB() {
+		mHM.EliminarPerHB();
+	}
 	
+	public void TXT2BBDDHB() {
+		mHM.Fichero2HB();
+	}
 	
-	
+	public void PedirDatosHB() {
+		mVista.PedirDatosHB(ListaVideojuegos);
+	}
+	public void PedirDatosPerHB() {
+		mVista.PedirDatosPerHB(listaPersonajes);
+	}
 	public void Cargar_Inicio() {
 		try {
 			
