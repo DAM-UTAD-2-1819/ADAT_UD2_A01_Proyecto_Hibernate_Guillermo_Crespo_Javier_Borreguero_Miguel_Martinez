@@ -40,7 +40,7 @@ public class FileManager implements Intercambio {
 	private String archivo_personajes = "src/Modelo/personajes.txt";
 	HashMap<Integer, Videojuego> ListaVideojuegos = new HashMap<Integer, Videojuego>();
 	HashMap<Integer, Personajes> listaPersonajes = new HashMap<Integer, Personajes>();
-	Inicio mVista = new Inicio();
+	
 
 	@Override
 	public HashMap<Integer, Videojuego> LeerTodos() {
@@ -90,12 +90,10 @@ public class FileManager implements Intercambio {
 
 	@Override
 	public HashMap<Integer, Videojuego> EscribirTodos() {
-		Properties propiedades = new Properties();
-		InputStream entrada = null;
 		Controlador mControlador = new Controlador();
 
 		try {
-			mVista.PedirDatosF(ListaVideojuegos);
+			mControlador.PedirDatosF(ListaVideojuegos);
 			BufferedWriter bw = new BufferedWriter(new FileWriter(archivo_videojuegos, true));
 			for (Entry<Integer, Videojuego> entry : ListaVideojuegos.entrySet()) {
 				bw.write("ID: " + entry.getKey() + "\n" + "Nombre: " + entry.getValue().getNombre() + "\n"
@@ -121,7 +119,7 @@ public class FileManager implements Intercambio {
 		Controlador mControlador = new Controlador();
 
 		try {
-			mVista.PedirDatoPerF(listaPersonajes);
+			mControlador.PedirDatosPerF(listaPersonajes);
 			BufferedWriter bw = new BufferedWriter(new FileWriter(archivo_personajes, true));
 			for (Entry<Integer, Personajes> entry : listaPersonajes.entrySet()) {
 				bw.write("ID: " + entry.getKey() + "\n" + "Nombre: " + entry.getValue().getNombre_Personaje() + "\n"

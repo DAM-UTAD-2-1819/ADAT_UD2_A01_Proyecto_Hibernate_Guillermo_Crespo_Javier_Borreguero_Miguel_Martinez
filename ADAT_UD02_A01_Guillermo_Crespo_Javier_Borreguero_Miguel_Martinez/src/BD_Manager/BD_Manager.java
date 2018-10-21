@@ -32,7 +32,6 @@ public class BD_Manager implements Intercambio {
 	HashMap<Integer, Videojuego> ListaVideojuegos = new HashMap<Integer, Videojuego>();
 	HashMap<Integer, Personajes> ListaPersonajes = new HashMap<Integer, Personajes>();
 
-	Inicio mVista = new Inicio();
 
 	@Override
 	public HashMap<Integer, Videojuego> EscribirTodos() {
@@ -146,7 +145,7 @@ public class BD_Manager implements Intercambio {
 			Controlador mControlador = new Controlador();
 			PreparedStatement pstm;
 
-			mVista.PedirDatosDB(ListaVideojuegos);
+		mControlador.PedirDatosBD(ListaVideojuegos);
 
 			for (Entry<Integer, Videojuego> entry : ListaVideojuegos.entrySet()) {
 				String cargar = "INSERT INTO `videojuegos`(`ID`, `Nombre`, `Fecha_Lanzamiento`, `Desarrollador`, `Plataforma`) VALUES ("
@@ -175,7 +174,7 @@ public class BD_Manager implements Intercambio {
 			Controlador mControlador = new Controlador();
 			PreparedStatement pstm;
 
-			mVista.PedirDatoPerDB(ListaPersonajes);
+			mControlador.PedirDatosPerDB(ListaPersonajes);
 
 			for (Entry<Integer, Personajes> entry : ListaPersonajes.entrySet()) {
 				String cargar = "INSERT INTO `personajes`(`ID`, `Nombre_Personaje`, `ID_Juego`) VALUES ("
@@ -213,7 +212,7 @@ public class BD_Manager implements Intercambio {
 
 				ListaVideojuegos.put(id, mVideojuego);
 			}
-			mVista.sacarPantalla(ListaVideojuegos);
+			mControlador.MostrarDatos(ListaVideojuegos);
 			mControlador.Cargar_Inicio();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -242,7 +241,7 @@ public class BD_Manager implements Intercambio {
 
 				ListaVideojuegos.put(id, mVideojuego);
 			}
-			mVista.sacarPantalla(ListaVideojuegos);
+		mControlador.MostrarDatos(ListaVideojuegos);
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -270,7 +269,8 @@ public class BD_Manager implements Intercambio {
 				ListaPersonajes.put(id1, mPersonaje);
 			}
 			
-			mVista.sacarPantallaPer(ListaPersonajes);
+			mControlador.MostrarDatosPer(ListaPersonajes);
+		
 			mControlador.Cargar_Inicio();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

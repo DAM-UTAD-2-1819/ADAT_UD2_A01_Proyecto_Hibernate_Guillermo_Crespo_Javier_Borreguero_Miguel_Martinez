@@ -140,7 +140,7 @@ public class HibernateManager implements Intercambio {
 		Controlador mControlador = new Controlador();
 
 		s.beginTransaction();
-		mControlador.PedirDatosHB();
+		mControlador.PedirDatosHB(ListaVideojuegos);
 		for (Entry<Integer, Videojuego> entry : ListaVideojuegos.entrySet()) {
 
 			v.setID(entry.getKey());
@@ -167,7 +167,7 @@ public class HibernateManager implements Intercambio {
 		personajes p = new personajes();
 		Controlador mControlador = new Controlador();
 		s.beginTransaction();
-		mVista.PedirDatosPerHB(listaPersonajes);
+		mControlador.PedirDatosPerHB(listaPersonajes);
 		for (Entry<Integer, Personajes> entry: listaPersonajes.entrySet()) {
 			p.setID(entry.getKey());
 			p.setNombre_Personaje(entry.getValue().getNombre_Personaje());
@@ -214,7 +214,7 @@ public class HibernateManager implements Intercambio {
 			s.getTransaction().commit();
 			s.close();
 
-			mVista.sacarPantalla(ListaVideojuegos);
+			mControlador.MostrarDatos(ListaVideojuegos);
 			
 
 		} catch (Exception e) {
@@ -293,7 +293,7 @@ public class HibernateManager implements Intercambio {
 			s.getTransaction().commit();
 			s.close();
 
-			mVista.sacarPantallaPer(listaPersonajes);
+			mControlador.MostrarDatosPer(listaPersonajes);
 			mControlador.Cargar_Inicio();
 
 		} catch (Exception e) {
@@ -305,7 +305,8 @@ public class HibernateManager implements Intercambio {
 	}
 	public HashMap<Integer, Videojuego> EliminarHB(){
 		videojuegos v  = new videojuegos();
-		mVista.EliminarDatosHB(ListaVideojuegos);
+		Controlador mControlador = new Controlador();
+		mControlador.EliminarDatosHB(ListaVideojuegos);
 		
 		for (Entry<Integer, Videojuego> entry : ListaVideojuegos.entrySet()) {
 
@@ -325,14 +326,15 @@ public class HibernateManager implements Intercambio {
 		s.getTransaction().commit();
 		s.close();
 		
-		Controlador mControlador = new Controlador();
+	
 		mControlador.Cargar_Inicio();
 		return ListaVideojuegos;
 		
 	}
 	public HashMap<Integer, Personajes> EliminarPerHB(){
 		personajes p  = new personajes();
-		mVista.EliminarDatosPerHB(listaPersonajes);
+		Controlador mControlador = new Controlador();
+		mControlador.EliminarDatosHB(ListaVideojuegos);
 		
 		for (Entry<Integer, Personajes> entry : listaPersonajes.entrySet()) {
 
@@ -349,7 +351,7 @@ public class HibernateManager implements Intercambio {
 		s.getTransaction().commit();
 		s.close();
 		
-		Controlador mControlador = new Controlador();
+		
 		mControlador.Cargar_Inicio();
 		return listaPersonajes;
 		
@@ -399,7 +401,7 @@ public class HibernateManager implements Intercambio {
 
 		s.save(v);
 		
-		s.getTransaction().commit();
+		//s.getTransaction().commit();
 		
 
 		br.close();
@@ -434,7 +436,7 @@ public class HibernateManager implements Intercambio {
 				Personajes mPersonaje = new Personajes(nombre_Personaje, id_Juego);
 				listaPersonajes.put(id, mPersonaje);
 			}
-			s.beginTransaction();
+			//s.beginTransaction();
 
 
 			for (Entry<Integer, Personajes> entry: listaPersonajes.entrySet()) {
